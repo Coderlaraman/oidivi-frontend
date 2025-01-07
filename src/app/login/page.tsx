@@ -1,9 +1,11 @@
 import LoginForm from '@/components/LoginForm';
 
-export default function LoginPage() {
+const LoginPage = () => {
   return (
-    <main className="container mx-auto p-4">
+    <div className="flex justify-center items-center h-screen">
       <LoginForm />
-    </main>
+    </div>
   );
-}
+};
+
+export default LoginPage;

@@ -1,30 +1,38 @@
 'use client';
 
-import useAuth from '@/hooks/useAuth';
+import useDashboard from '../hooks/useDashboard';
 
 const Dashboard = () => {
-  const { user, logout, loading } = useAuth();
+  const { user, loading, error } = useDashboard();
 
-  if (!user) return <p>Loading...</p>;
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center h-screen bg-gray-100">
+        <p className="text-lg font-semibold text-gray-700">Loading...</p>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="flex items-center justify-center h-screen bg-gray-100">
+        <p className="text-lg font-semibold text-red-500">Error: {error}</p>
+      </div>
+    );
+  }
 
   return (
-    <div className="p-6">
-      <h1 className="text-2xl font-bold">Welcome, {user.name}!</h1>
-      {user.profile_photo_url && (
-        // eslint-disable-next-line @next/next/no-img-element
-        <img
-          src={user.profile_photo_url}
-          alt="Profile"
-          className="mt-4 w-32 h-32 rounded-full"
-        />
-      )}
-      <button
-        onClick={logout}
-        className="mt-6 py-2 px-4 bg-red-500 text-white rounded"
-        disabled={loading}
-      >
-        {loading ? 'Logging out...' : 'Log out'}
-      </button>
+    <div className="min-h-screen bg-gray-100 text-gray-800">
+      <header className="bg-red-500 text-white py-4">
+        <div className="container mx-auto px-4 flex justify-between items-center">
+          <h1 className="text-2xl font-bold">OiDiVi Helper Dashboard</h1>
+        </div>
+      </header>
+
+      <main className="container mx-auto px-4 py-8">
+        <h2 className="text-xl font-semibold mb-4">Welcome, {user?.name}!</h2>
+        <p>Email: {user?.email}</p>
+      </main>
     </div>
   );
 };

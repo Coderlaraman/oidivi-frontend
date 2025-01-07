@@ -15,6 +15,17 @@ const eslintConfig = [
     'next/typescript',
     'plugin:prettier/recommended'
   ),
+  {
+    rules: {
+      // Configura la regla de comillas de Prettier
+      'prettier/prettier': [
+        'error',
+        {
+          singleQuote: true,
+        },
+      ],
+    },
+  },
 ];
 
 export default eslintConfig;

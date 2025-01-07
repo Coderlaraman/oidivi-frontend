@@ -1,9 +1,11 @@
 import RegisterForm from '@/components/RegisterForm';
 
-export default function RegisterPage() {
+const RegisterPage = () => {
   return (
-    <main className="container mx-auto p-4">
+    <div className="flex justify-center items-center h-screen">
       <RegisterForm />
-    </main>
+    </div>
   );
-}
+};
+
+export default RegisterPage;
