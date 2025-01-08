@@ -1,24 +1,24 @@
 'use client';
 
-// import { useState } from 'react';
+import { useState } from 'react';
 import Link from 'next/link';
 
 export default function Home() {
-  // const [searchTerm, setSearchTerm] = useState('');
-  // const [location, setLocation] = useState('');
-  // const [helpersCount, setHelpersCount] = useState<number | null>(null);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [location, setLocation] = useState('');
+  const [helpersCount, setHelpersCount] = useState<number | null>(null);
 
-  // const handleSearch = async () => {
-  //   try {
-  //     const response = await fetch(
-  //       `http://oidivi-api.test/api/v1/client/helpers?category=${searchTerm}&location=${location}`
-  //     );
-  //     const data = await response.json();
-  //     setHelpersCount(data.count); // Supongamos que el backend devuelve un `count`
-  //   } catch (error) {
-  //     console.error('Error fetching helpers:', error);
-  //   }
-  // };
+  const handleSearch = async () => {
+    try {
+      const response = await fetch(
+        `http://oidivi-api.test/api/v1/client/helpers?category=${searchTerm}&location=${location}`
+      );
+      const data = await response.json();
+      setHelpersCount(data.count); // Supongamos que el backend devuelve un `count`
+    } catch (error) {
+      console.error('Error fetching helpers:', error);
+    }
+  };
 
   return (
     <div className="bg-black text-white">
@@ -49,7 +49,7 @@ export default function Home() {
       {/* Features Section */}
       <section className="py-16 bg-gray-800 text-center px-4 md:px-8">
         {/* Search Section */}
-        {/* <section className="flex flex-col items-center pb-10 text-white">
+        <section className="flex flex-col items-center pb-10 text-white">
           <h3 className="text-2xl font-semibold mb-6">Find a Helper</h3>
           <div className="w-full max-w-4xl flex flex-col sm:flex-row items-center gap-4 px-4">
             <input
@@ -78,7 +78,7 @@ export default function Home() {
               {helpersCount} helpers found in this category and location.
             </p>
           )}
-        </section> */}
+        </section>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {[
             { title: 'Trusted Helpers', description: 'Verified and rated.' },

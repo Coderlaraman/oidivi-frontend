@@ -30,7 +30,7 @@ export default function RootLayout({
         <div className="min-h-screen flex flex-col">
           {/* Header */}
           <header className="bg-gradient-to-r from-red-500 to-black text-white">
-            <div className="max-w-7xl mx-auto px-4 py-6 flex justify-between items-center">
+            <div className="w-full mx-auto px-4 py-6 flex justify-between items-center">
               <h1 className="text-2xl font-bold">OiDiVi Helper</h1>
               <nav>
                 <ul className="flex space-x-4">
@@ -60,14 +60,14 @@ export default function RootLayout({
           </header>
 
           {/* Main Content */}
-          <main className="flex-grow">{children}</main>
+          <main className="flex-grow overflow-y-auto">{children}</main>
 
           {/* Footer */}
-          <footer className="bg-gradient-to-r from-black to-red-500 text-white text-center py-4">
+          {/* <footer className="bg-gradient-to-r from-black to-red-500 text-white text-center py-4">
             <p className="text-sm">
               © 2025 OiDiVi Helper. All rights reserved.
             </p>
-          </footer>
+          </footer> */}
         </div>
       </body>
     </html>
