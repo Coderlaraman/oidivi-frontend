@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import api from '../utils/api'; // Instancia de Axios configurada para tu backend
+import api from '../lib/api'; // Instancia de Axios configurada para tu backend
 
 interface RegisterData {
   name: string;

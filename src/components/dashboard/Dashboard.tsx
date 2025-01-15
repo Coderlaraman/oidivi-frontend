@@ -1,26 +1,43 @@
 'use client';
 
 import { useState } from 'react';
-import { updateProfile } from '../utils/api';
-import useDashboard from '../hooks/useDashboard';
-import AddressInput from './AddressInput';
+import {
+  updateProfileData,
+  uploadProfilePhoto,
+  uploadProfileVideo,
+} from '@/lib/api';
+import useDashboard from '@/hooks/useDashboard';
+import AddressInput from '@/components/shared/AddressInput';
 
 const Dashboard: React.FC = () => {
   const { user, loading, error } = useDashboard();
   const [formData, setFormData] = useState({
     name: user?.name || '',
     email: user?.email || '',
+    phone: user?.phone || '',
     address: user?.address || '',
     zip_code: user?.zip_code || '',
     latitude: user?.latitude || 0,
     longitude: user?.longitude || 0,
   });
+
+  const [profilePhoto, setProfilePhoto] = useState<File | null>(null);
+  const [profileVideo, setProfileVideo] = useState<File | null>(null);
   const [successMessage, setSuccessMessage] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
+  };
+
+  const handleFileChange = (
+    e: React.ChangeEvent<HTMLInputElement>,
+    setter: React.Dispatch<React.SetStateAction<File | null>>
+  ) => {
+    if (e.target.files && e.target.files.length > 0) {
+      setter(e.target.files[0]);
+    }
   };
 
   const handleAddressSelected = (location: {
@@ -38,27 +55,53 @@ const Dashboard: React.FC = () => {
     });
   };
 
+  /**
+   * Envía los datos del perfil y maneja las subidas de archivos.
+   */
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setSuccessMessage('');
     setErrorMessage('');
 
-    // Crear un objeto con solo los campos modificados
-    const dataToSend = Object.fromEntries(
-      Object.entries(formData).filter(
-        ([, value]) => value !== '' && value !== null
-      )
-    );
+    //   // Crear un objeto con solo los campos modificados
+    //   const dataToSend = Object.fromEntries(
+    //     Object.entries(formData).filter(
+    //       ([, value]) => value !== '' && value !== null
+    //     )
+    //   );
+
+    //   try {
+    //     await updateProfile(dataToSend); // Usamos el método general de actualización
+    //     setSuccessMessage('Profile updated successfully!');
+    //     // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    //   } catch (err: any) {
+    //     setErrorMessage(
+    //       err.response?.data?.message || 'Failed to update profile.'
+    //     );
+    //     console.error(err);
+    //   }
+    // };
 
     try {
-      await updateProfile(dataToSend); // Usamos el método general de actualización
+      // Actualizar los datos básicos del perfil
+      await updateProfileData(formData);
+
+      // Subir imagen de perfil si se seleccionó
+      if (profilePhoto) {
+        await uploadProfilePhoto(profilePhoto);
+      }
+
+      // Subir video de perfil si se seleccionó
+      if (profileVideo) {
+        await uploadProfileVideo(profileVideo);
+      }
+
       setSuccessMessage('Profile updated successfully!');
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (err: any) {
       setErrorMessage(
         err.response?.data?.message || 'Failed to update profile.'
       );
-      console.error(err);
     }
   };
 
@@ -152,6 +195,36 @@ const Dashboard: React.FC = () => {
                 value={formData.email}
                 onChange={handleInputChange}
                 className="w-full p-3 border rounded focus:ring-2 focus:ring-red-500 focus:outline-none"
+              />
+            </div>
+            <div>
+              <label htmlFor="phone">Phone</label>
+              <input
+                id="phone"
+                name="phone"
+                type="text"
+                value={formData.phone}
+                onChange={handleInputChange}
+              />
+            </div>
+            <div>
+              <label htmlFor="profilePhoto">Profile Photo</label>
+              <input
+                id="profilePhoto"
+                name="profilePhoto"
+                type="file"
+                accept="image/*"
+                onChange={(e) => handleFileChange(e, setProfilePhoto)}
+              />
+            </div>
+            <div>
+              <label htmlFor="profileVideo">Profile Video</label>
+              <input
+                id="profileVideo"
+                name="profileVideo"
+                type="file"
+                accept="video/*"
+                onChange={(e) => handleFileChange(e, setProfileVideo)}
               />
             </div>
             <AddressInput onAddressSelected={handleAddressSelected} />

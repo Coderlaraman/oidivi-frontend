@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import useLogin from '../hooks/useLogin';
+import useLogin from '@/hooks/useLogin';
 
 const LoginForm = () => {
   const router = useRouter();

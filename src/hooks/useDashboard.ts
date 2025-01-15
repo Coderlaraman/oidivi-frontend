@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
-import api from '../utils/api';
+import api from '../lib/api';
 import { useRouter } from 'next/navigation';
-import { User } from '../types'; // Importa el tipo
+import { User } from '../types/index';
 
 const useDashboard = () => {
   const [user, setUser] = useState<User | null>(null); // Define el tipo para el usuario

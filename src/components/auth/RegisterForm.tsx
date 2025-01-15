@@ -2,8 +2,8 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import AddressInput from './AddressInput';
-import useRegister from '../hooks/useRegister';
+import AddressInput from '@/components/shared/AddressInput';
+import useRegister from '@/hooks/useRegister';
 
 const RegisterForm = () => {
   const router = useRouter();
