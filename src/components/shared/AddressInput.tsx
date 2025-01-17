@@ -59,7 +59,10 @@ const AddressInput: React.FC<AddressInputProps> = ({
                 comp.types.includes('postal_code')
               )?.long_name || '';
           } catch (error) {
-            console.error('Error al obtener ZIP code con Geocoding:', error);
+            console.error(
+              'Error trying to get ZIP code with Geocoding:',
+              error
+            );
           }
         }
 
@@ -92,7 +95,7 @@ const AddressInput: React.FC<AddressInputProps> = ({
           placeholder="Enter your address"
           value={address}
           onChange={(e) => setAddress(e.target.value)}
-          className={`block w-full p-3 border border-gray-300 rounded focus:ring-2 focus:ring-red-500 focus:outline-none ${inputClassName}`}
+          className={`block w-full p-3 border border-gray-300 rounded bg-gray-300 dark:bg-gray-700 text-gray-700 dark:text-gray-300 focus:ring-2 focus:ring-red-500 focus:outline-none ${inputClassName}`}
         />
       </Autocomplete>
     </div>

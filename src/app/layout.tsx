@@ -1,5 +1,8 @@
 import type { Metadata } from 'next';
 import { Geist, Geist_Mono } from 'next/font/google';
+import '@fortawesome/fontawesome-svg-core/styles.css';
+import { config } from '@fortawesome/fontawesome-svg-core';
+config.autoAddCss = false;
 import '@/styles/globals.css';
 
 const geistSans = Geist({
@@ -29,7 +32,7 @@ export default function RootLayout({
       >
         <div className="min-h-screen flex flex-col">
           {/* Header */}
-          <header className="bg-gradient-to-r from-red-500 to-black text-white">
+          {/* <header className="bg-gradient-to-r from-red-500 to-black text-white">
             <div className="w-full mx-auto px-4 py-6 flex justify-between items-center">
               <h1 className="text-2xl font-bold">OiDiVi Helper</h1>
               <nav>
@@ -57,7 +60,7 @@ export default function RootLayout({
                 </ul>
               </nav>
             </div>
-          </header>
+          </header> */}
 
           {/* Main Content */}
           <main className="flex-grow overflow-y-auto">{children}</main>

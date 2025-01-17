@@ -1,109 +1,18 @@
 'use client';
 
-import { useState } from 'react';
-import {
-  updateProfileData,
-  uploadProfilePhoto,
-  uploadProfileVideo,
-} from '@/lib/api';
+import React, { useState } from 'react';
 import useDashboard from '@/hooks/useDashboard';
-import AddressInput from '@/components/shared/AddressInput';
+import EditProfileModal from '../shared/EditProfile';
+import UserProfileDetails from '../shared/UserProfileDetails';
+import UserActivities from '../shared/UserActivities';
+import QuickLinks from '../shared/QuickLinks';
+import DashboardFooter from '../shared/DashboardFooter';
+import DashboardHeader from '../shared/DashboardHeader';
+import SearchInput from '../shared/SearchInput';
 
 const Dashboard: React.FC = () => {
   const { user, loading, error } = useDashboard();
-  const [formData, setFormData] = useState({
-    name: user?.name || '',
-    email: user?.email || '',
-    phone: user?.phone || '',
-    address: user?.address || '',
-    zip_code: user?.zip_code || '',
-    latitude: user?.latitude || 0,
-    longitude: user?.longitude || 0,
-  });
-
-  const [profilePhoto, setProfilePhoto] = useState<File | null>(null);
-  const [profileVideo, setProfileVideo] = useState<File | null>(null);
-  const [successMessage, setSuccessMessage] = useState('');
-  const [errorMessage, setErrorMessage] = useState('');
-
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
-  };
-
-  const handleFileChange = (
-    e: React.ChangeEvent<HTMLInputElement>,
-    setter: React.Dispatch<React.SetStateAction<File | null>>
-  ) => {
-    if (e.target.files && e.target.files.length > 0) {
-      setter(e.target.files[0]);
-    }
-  };
-
-  const handleAddressSelected = (location: {
-    address: string;
-    zip_code: string;
-    latitude: number;
-    longitude: number;
-  }) => {
-    setFormData({
-      ...formData,
-      address: location.address,
-      zip_code: location.zip_code,
-      latitude: location.latitude,
-      longitude: location.longitude,
-    });
-  };
-
-  /**
-   * Envía los datos del perfil y maneja las subidas de archivos.
-   */
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setSuccessMessage('');
-    setErrorMessage('');
-
-    //   // Crear un objeto con solo los campos modificados
-    //   const dataToSend = Object.fromEntries(
-    //     Object.entries(formData).filter(
-    //       ([, value]) => value !== '' && value !== null
-    //     )
-    //   );
-
-    //   try {
-    //     await updateProfile(dataToSend); // Usamos el método general de actualización
-    //     setSuccessMessage('Profile updated successfully!');
-    //     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    //   } catch (err: any) {
-    //     setErrorMessage(
-    //       err.response?.data?.message || 'Failed to update profile.'
-    //     );
-    //     console.error(err);
-    //   }
-    // };
-
-    try {
-      // Actualizar los datos básicos del perfil
-      await updateProfileData(formData);
-
-      // Subir imagen de perfil si se seleccionó
-      if (profilePhoto) {
-        await uploadProfilePhoto(profilePhoto);
-      }
-
-      // Subir video de perfil si se seleccionó
-      if (profileVideo) {
-        await uploadProfileVideo(profileVideo);
-      }
-
-      setSuccessMessage('Profile updated successfully!');
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    } catch (err: any) {
-      setErrorMessage(
-        err.response?.data?.message || 'Failed to update profile.'
-      );
-    }
-  };
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
 
   if (loading) {
     return (
@@ -121,156 +30,63 @@ const Dashboard: React.FC = () => {
     );
   }
 
+  const handleEditProfile = () => setIsEditModalOpen(true);
+
   return (
-    <div className="h-screen p-6 w-11/12 mx-auto bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-500 rounded-lg shadow-lg">
-      {/* Main Content */}
-      <main className="space-y-8">
-        {/* Profile Section */}
-        <section className="space-y-4">
-          <div className="flex justify-between items-center">
-            <h2 className="text-2xl font-bold text-red-600">User Profile</h2>
+    <div className="flex flex-col h-screen bg-gradient-to-b from-gray-900 to-gray-800 text-white w-full">
+      {/* Barra superior */}
+      <DashboardHeader />
+
+      <div className="flex flex-1 overflow-hidden">
+        {/* Barra lateral */}
+        {/* <aside className="w-64 bg-gradient-to-t from-black to-red-900 p-6 hidden md:block">
+          <nav className="space-y-4">
+            <button className="block py-2 px-4 bg-red-600 text-white font-bold rounded hover:bg-red-700">
+              Home
+            </button>
             <button
-              onClick={() => {
-                localStorage.removeItem('authToken');
-                window.location.href = '/login';
-              }}
-              aria-label="Logout"
-              className="py-2 px-4 bg-gradient-to-r from-red-500 to-black text-white font-bold rounded hover:from-red-600 hover:to-gray-800 transition-colors"
+              onClick={handleEditProfile}
+              className="block py-2 px-4 bg-gray-800 text-white rounded hover:bg-gray-700"
             >
-              Logout
+              Edit Profile
             </button>
-          </div>
-          <div className="space-y-4">
-            <div className="p-4 bg-gray-100 dark:bg-gray-800 rounded-lg shadow">
-              <h3 className="text-lg font-semibold">Profile Details</h3>
-              <p>
-                <strong>Name:</strong> {user?.name || 'N/A'}
-              </p>
-              <p>
-                <strong>Email:</strong> {user?.email || 'N/A'}
-              </p>
-              <p>
-                <strong>Address:</strong> {user?.address || 'N/A'}
-              </p>
-              <p>
-                <strong>ZIP Code:</strong> {user?.zip_code || 'N/A'}
-              </p>
-            </div>
-            <div className="p-4 bg-gray-100 dark:bg-gray-800 rounded-lg shadow">
-              <h3 className="text-lg font-semibold">Roles</h3>
-              <ul className="list-disc pl-5">
-                {user?.roles?.map((role, index) => (
-                  <li key={index}>{role}</li>
-                )) || <p>No roles assigned</p>}
-              </ul>
-            </div>
-          </div>
-        </section>
+            <button className="block py-2 px-4 bg-gray-800 text-white rounded hover:bg-gray-700">
+              Settings
+            </button>
+          </nav>
+        </aside> */}
 
-        {/* Form Section */}
-        <section className="space-y-4">
-          <h2 className="text-2xl font-bold text-red-600">Edit Profile</h2>
-          <form onSubmit={handleSubmit} className="space-y-4">
-            <div>
-              <label htmlFor="name" className="block text-sm font-medium mb-1">
-                Name
-              </label>
-              <input
-                id="name"
-                type="text"
-                name="name"
-                value={formData.name}
-                onChange={handleInputChange}
-                className="w-full p-3 border rounded focus:ring-2 focus:ring-red-500 focus:outline-none"
-              />
-            </div>
-            <div>
-              <label htmlFor="email" className="block text-sm font-medium mb-1">
-                Email
-              </label>
-              <input
-                id="email"
-                type="email"
-                name="email"
-                value={formData.email}
-                onChange={handleInputChange}
-                className="w-full p-3 border rounded focus:ring-2 focus:ring-red-500 focus:outline-none"
-              />
-            </div>
-            <div>
-              <label htmlFor="phone">Phone</label>
-              <input
-                id="phone"
-                name="phone"
-                type="text"
-                value={formData.phone}
-                onChange={handleInputChange}
-              />
-            </div>
-            <div>
-              <label htmlFor="profilePhoto">Profile Photo</label>
-              <input
-                id="profilePhoto"
-                name="profilePhoto"
-                type="file"
-                accept="image/*"
-                onChange={(e) => handleFileChange(e, setProfilePhoto)}
-              />
-            </div>
-            <div>
-              <label htmlFor="profileVideo">Profile Video</label>
-              <input
-                id="profileVideo"
-                name="profileVideo"
-                type="file"
-                accept="video/*"
-                onChange={(e) => handleFileChange(e, setProfileVideo)}
-              />
-            </div>
-            <AddressInput onAddressSelected={handleAddressSelected} />
-            <button
-              type="submit"
-              className="w-full py-3 bg-gradient-to-r from-red-500 to-black text-white font-bold rounded hover:from-red-600 hover:to-gray-800 transition-colors"
-            >
-              Update Profile
-            </button>
-            {successMessage && (
-              <p className="text-green-500 text-center mt-3">
-                {successMessage}
-              </p>
-            )}
-            {errorMessage && (
-              <p className="text-red-500 text-center mt-3">{errorMessage}</p>
-            )}
-          </form>
-        </section>
+        {/* Contenido principal */}
+        <main className="flex-1 overflow-y-auto p-6 space-y-8 bg-gray-800">
+          <SearchInput />
+          <UserProfileDetails user={user} onEditProfile={handleEditProfile} />
+          <UserActivities
+            activities={{ activeRequests: 5, offeredServices: 10 }}
+          />
+          <QuickLinks
+            links={[
+              {
+                label: 'Find Helpers',
+                onClick: () => console.log('Find Helpers'),
+              },
+              {
+                label: 'Offer Services',
+                onClick: () => console.log('Offer Services'),
+              },
+            ]}
+          />
+        </main>
+      </div>
 
-        {/* Activities Section */}
-        <section className="space-y-4">
-          <h2 className="text-2xl font-bold text-red-600">Your Activities</h2>
-          <ul className="space-y-2 p-4 bg-gray-100 dark:bg-gray-800 rounded-lg shadow">
-            <li>Active requests: 0</li>
-            <li>Offered services: 0</li>
-          </ul>
-        </section>
+      <DashboardFooter />
 
-        {/* Quick Links Section */}
-        <section className="space-y-4">
-          <h2 className="text-2xl font-bold text-red-600">Quick Actions</h2>
-          <div className="flex space-x-4">
-            <button className="py-2 px-4 bg-gradient-to-r from-red-500 to-black text-white font-bold rounded hover:from-red-600 hover:to-gray-800 transition-colors">
-              Publish Service
-            </button>
-            <button className="py-2 px-4 bg-gradient-to-r from-red-500 to-black text-white font-bold rounded hover:from-red-600 hover:to-gray-800 transition-colors">
-              Find Helpers
-            </button>
-          </div>
-        </section>
-        {/* Footer */}
-        <footer className="bg-gradient-to-r from-black to-red-500 text-white text-center py-4">
-          <p className="text-sm">© 2025 OiDiVi Helper. All rights reserved.</p>
-        </footer>
-      </main>
+      {/* Modal de edición */}
+      {isEditModalOpen && (
+        <EditProfileModal
+          user={user}
+          onClose={() => setIsEditModalOpen(false)}
+        />
+      )}
     </div>
   );
 };
