@@ -9,23 +9,34 @@ import QuickLinks from '../shared/QuickLinks';
 import DashboardFooter from '../shared/DashboardFooter';
 import DashboardHeader from '../shared/DashboardHeader';
 import SearchInput from '../shared/SearchInput';
+import SidebarDesktop from '../shared/SidebarDesktop';
+import SidebarMobile from '../shared/SidebarMobile';
 
 const Dashboard: React.FC = () => {
   const { user, loading, error } = useDashboard();
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+
+  const toggleSidebar = () => setIsSidebarOpen(!isSidebarOpen);
+
+  const closeSidebar = () => setIsSidebarOpen(false);
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center h-screen bg-red-500">
-        <p className="text-lg font-semibold text-white">Loading...</p>
+      <div className="flex items-center justify-center h-screen bg-gray-200 dark:bg-gray-900">
+        <p className="text-lg font-semibold text-red-600 dark:text-red-700">
+          Loading...
+        </p>
       </div>
     );
   }
 
   if (error) {
     return (
-      <div className="flex items-center justify-center h-screen bg-gray-200">
-        <p className="text-lg font-semibold text-red-500">Error: {error}</p>
+      <div className="flex items-center justify-center h-screen bg-gray-200 dark:bg-gray-900">
+        <p className="text-lg font-semibold text-red-600 dark:text-red-700">
+          Error: {error}
+        </p>
       </div>
     );
   }
@@ -33,31 +44,27 @@ const Dashboard: React.FC = () => {
   const handleEditProfile = () => setIsEditModalOpen(true);
 
   return (
-    <div className="flex flex-col h-screen bg-gradient-to-b from-gray-900 to-gray-800 text-white w-full">
+    <div className="flex flex-col h-screen bg-gray-200 dark:bg-gray-900 text-gray-900 dark:text-gray-200 w-full">
       {/* Barra superior */}
-      <DashboardHeader />
+      <DashboardHeader
+        onToggleSidebar={toggleSidebar}
+        isSidebarOpen={isSidebarOpen}
+      />
 
       <div className="flex flex-1 overflow-hidden">
-        {/* Barra lateral */}
-        {/* <aside className="w-64 bg-gradient-to-t from-black to-red-900 p-6 hidden md:block">
-          <nav className="space-y-4">
-            <button className="block py-2 px-4 bg-red-600 text-white font-bold rounded hover:bg-red-700">
-              Home
-            </button>
-            <button
-              onClick={handleEditProfile}
-              className="block py-2 px-4 bg-gray-800 text-white rounded hover:bg-gray-700"
-            >
-              Edit Profile
-            </button>
-            <button className="block py-2 px-4 bg-gray-800 text-white rounded hover:bg-gray-700">
-              Settings
-            </button>
-          </nav>
-        </aside> */}
+        {/* Barra lateral para dispositivos grandes */}
+        <SidebarDesktop onEditProfile={handleEditProfile} />
+
+        {/* Barra lateral para dispositivos pequeños */}
+        {isSidebarOpen && (
+          <SidebarMobile
+            onEditProfile={handleEditProfile}
+            onClose={closeSidebar}
+          />
+        )}
 
         {/* Contenido principal */}
-        <main className="flex-1 overflow-y-auto p-6 space-y-8 bg-gray-800">
+        <main className="flex-1 overflow-y-auto p-4 md:p-6 space-y-8">
           <SearchInput />
           <UserProfileDetails user={user} onEditProfile={handleEditProfile} />
           <UserActivities

@@ -51,9 +51,12 @@ const ProfileVideoUploader: React.FC<ProfileVideoUploaderProps> = ({
       )}
       <label
         htmlFor="videoInput"
-        className="absolute bottom-0 right-0 bg-red-600 p-2 rounded-full cursor-pointer hover:bg-red-700"
+        className="absolute bottom-0 right-0 bg-white p-1 m-1 rounded-md cursor-pointer dark:bg-transparent hover:bg-white border-2 hover:border-4 dark:hover:bg-red-600 border-red-600 dark:border-white"
       >
-        <FontAwesomeIcon icon={faPen} className="text-white" />
+        <FontAwesomeIcon
+          icon={faPen}
+          className="text-red-600 dark:text-white"
+        />
       </label>
       <input
         type="file"
