@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const api = axios.create({
-  baseURL: 'http://oidivi-api.test/api/v1/client',
+  baseURL: process.env.NEXT_PUBLIC_API_BASE_URL,
 });
 
 // Interceptor para incluir el token de autenticación

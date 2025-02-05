@@ -61,6 +61,7 @@ const LoginForm = () => {
             id="password"
             className="block w-full p-3 border rounded focus:ring-2 focus:ring-red-500 focus:outline-none"
             onChange={handleInputChange}
+            aria-invalid={!!error?.email}
           />
           {error?.password && (
             <p className="text-red-500 text-sm mt-1">{error.password[0]}</p>
