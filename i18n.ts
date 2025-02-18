@@ -9,7 +9,7 @@ i18n
   .use(initReactI18next)
   .init({
     supportedLngs: ['en', 'es'], // Idiomas soportados
-    fallbackLng: 'es', // Idioma por defecto
+    fallbackLng: 'en', // Idioma por defecto
     debug: process.env.NODE_ENV === 'development',
     interpolation: {
       escapeValue: false, // React ya maneja la protección contra XSS

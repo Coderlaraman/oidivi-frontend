@@ -22,6 +22,8 @@ const EditProfile: React.FC<EditProfileProps> = ({ user, onClose }) => {
     longitude: user?.longitude || 0,
   });
 
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
   const [successMessage, setSuccessMessage] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
 
@@ -47,6 +49,7 @@ const EditProfile: React.FC<EditProfileProps> = ({ user, onClose }) => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setIsSubmitting(true);
     setSuccessMessage('');
     setErrorMessage('');
 

@@ -33,7 +33,7 @@ const LoginForm = () => {
   return (
     <div className="p-6 w-1/3 mx-auto bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-500 rounded-lg shadow-lg">
       <h1 className="text-3xl font-bold mb-3 text-center text-red-600">
-        Login to OiDiVi Helper
+        Login {process.env.NEXT_PUBLIC_APP_NAME}
       </h1>
       <form noValidate onSubmit={handleSubmit} className="space-y-3">
         <div>
