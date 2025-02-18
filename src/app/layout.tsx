@@ -3,8 +3,8 @@ import '../styles/globals.css'
 import { ReactNode } from 'react'
 
 export const metadata = {
-  title: 'Prueba Honeycomb Next.js',
-  description: 'Replicando interfaz con fondo de colmena y efecto 3D en hover',
+  title: 'OiDiVi Helper',
+  description: 'OiDiVi Helper Home Page',
 }
 
 export default function RootLayout({

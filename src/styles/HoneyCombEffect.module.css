@@ -1,50 +1,48 @@
 /* app/components/HoneycombEffect.module.css */
 
 .honeycombContainer {
-    position: relative;
-    width: 100%;
-    height: 100vh;
-    overflow: hidden; /* Evita scroll si los hexágonos se salen */
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+  background-color: #cecdcd; /* Fondo para modo claro por defecto */
+}
+
+/* Aplica fondo oscuro si el sistema prefiere dark mode */
+@media (prefers-color-scheme: dark) {
+  .honeycombContainer {
+    background-color: #141414;
   }
-  
-  /* MODO CLARO */
-  .lightMode {
-    background-color: #cecdcd; /* Fondo claro */
-  }
-  
-  /* MODO OSCURO */
-  .darkMode {
-    background-color: #141414; /* Fondo oscuro */
-  }
-  
-  .hex {
-    position: absolute;
-    width: 95px;  /* Ajusta al mismo valor que hexWidth */
-    height: 80px; /* Ajusta al mismo valor que hexHeight */
-  }
-  
-  /* Base para la forma hexagonal */
-  .shape {
-    width: 108%;
-    height: 104%;
-    clip-path: polygon(
-      50% 0%,
-      93% 25%,
-      93% 75%,
-      50% 100%,
-      7% 75%,
-      7% 25%
-    );
-    transition: transform 0.5s, box-shadow 0.2s;
-  }
-  
-  /* HEXÁGONO MODO CLARO */
-  .lightHex {
-    background: linear-gradient(135deg, #c5c5c5, #ffffff);
-  }
-  
-  /* HEXÁGONO MODO OSCURO */
-  .darkHex {
+}
+
+.hex {
+  position: absolute;
+  width: 95px;  /* Ajusta según tu valor de hexWidth */
+  height: 80px; /* Ajusta según tu valor de hexHeight */
+}
+
+.shape {
+  width: 108%;
+  height: 104%;
+  clip-path: polygon(
+    50% 0%,
+    93% 25%,
+    93% 75%,
+    50% 100%,
+    7% 75%,
+    7% 25%
+  );
+  transition: transform 0.5s, box-shadow 0.2s;
+}
+
+/* Estilo base para el hexágono (modo claro) */
+.hexShape {
+  background: linear-gradient(135deg, #c5c5c5, #ffffff);
+}
+
+/* Sobrescribe el estilo para modo oscuro usando la media query */
+@media (prefers-color-scheme: dark) {
+  .hexShape {
     background: linear-gradient(135deg, #333333, #222222);
   }
-  
+}
