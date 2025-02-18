@@ -1,0 +1,50 @@
+/* app/components/HoneycombEffect.module.css */
+
+.honeycombContainer {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    overflow: hidden; /* Evita scroll si los hexágonos se salen */
+  }
+  
+  /* MODO CLARO */
+  .lightMode {
+    background-color: #cecdcd; /* Fondo claro */
+  }
+  
+  /* MODO OSCURO */
+  .darkMode {
+    background-color: #141414; /* Fondo oscuro */
+  }
+  
+  .hex {
+    position: absolute;
+    width: 95px;  /* Ajusta al mismo valor que hexWidth */
+    height: 80px; /* Ajusta al mismo valor que hexHeight */
+  }
+  
+  /* Base para la forma hexagonal */
+  .shape {
+    width: 108%;
+    height: 104%;
+    clip-path: polygon(
+      50% 0%,
+      93% 25%,
+      93% 75%,
+      50% 100%,
+      7% 75%,
+      7% 25%
+    );
+    transition: transform 0.5s, box-shadow 0.2s;
+  }
+  
+  /* HEXÁGONO MODO CLARO */
+  .lightHex {
+    background: linear-gradient(135deg, #c5c5c5, #ffffff);
+  }
+  
+  /* HEXÁGONO MODO OSCURO */
+  .darkHex {
+    background: linear-gradient(135deg, #333333, #222222);
+  }
+  

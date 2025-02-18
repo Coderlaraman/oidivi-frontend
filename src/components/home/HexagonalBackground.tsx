@@ -77,7 +77,7 @@ const HexagonalBackground: React.FC = () => {
     }, [createHexagons, handleMouseMove]);
 
     return (
-        <div className="hexagonal-background fixed inset-0 -z-10 bg-gradient-to-br from-gray-900 to-gray-800 overflow-hidden">
+        <div className="hexagonal-background fixed inset-0 -z-10 bg-gradient-to-br from-gray-500 to-gray-700 overflow-hidden">
             {hexagons.map((hexagon) => (
                 <div
                     key={hexagon.id}

@@ -1,19 +1,22 @@
 // app/layout.tsx
-import React from 'react';
-import '../styles/globals.css';
+import '../styles/globals.css'
+import { ReactNode } from 'react'
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export const metadata = {
+  title: 'Prueba Honeycomb Next.js',
+  description: 'Replicando interfaz con fondo de colmena y efecto 3D en hover',
+}
+
+export default function RootLayout({
+  children,
+}: {
+  children: ReactNode
+}) {
   return (
     <html lang="es">
-      <head>
-        <meta charSet="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Página de Inicio con Logo y Fondo Interactivo</title>
-
-      </head>
       <body>
         {children}
       </body>
     </html>
-  );
+  )
 }
