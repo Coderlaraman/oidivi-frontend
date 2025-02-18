@@ -1,6 +1,6 @@
 'use client';
-
 import React, { useEffect, useState, useCallback } from 'react';
+import './HexagonalBackground.css';
 
 interface Hexagon {
     id: number;
@@ -14,10 +14,10 @@ const HexagonalBackground: React.FC = () => {
     const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
 
     // Constantes para el tamaño y espaciado de los hexágonos
-    const HEX_WIDTH = 100;
-    const HEX_HEIGHT = 86.6; // altura = width * sin(60°)
-    const HORIZONTAL_SPACING = HEX_WIDTH * 0.75;
-    const VERTICAL_SPACING = HEX_HEIGHT;
+    const HEX_WIDTH = 110;
+    const HEX_HEIGHT = 125;
+    const HORIZONTAL_SPACING = HEX_WIDTH;
+    const VERTICAL_SPACING = 95;
 
     const createHexagons = useCallback(() => {
         const newHexagons: Hexagon[] = [];
@@ -30,14 +30,14 @@ const HexagonalBackground: React.FC = () => {
 
         for (let row = 0; row < rows; row++) {
             const isOddRow = row % 2 === 1;
-            const xOffset = isOddRow ? HORIZONTAL_SPACING / 2 : 0;
+            const xOffset = isOddRow ? HEX_WIDTH / 2 : 0;
 
             for (let col = 0; col < cols; col++) {
                 newHexagons.push({
                     id: row * cols + col,
                     x: col * HORIZONTAL_SPACING + xOffset,
                     y: row * VERTICAL_SPACING,
-                    isHovered: false
+                    isHovered: false,
                 });
             }
         }
@@ -51,15 +51,15 @@ const HexagonalBackground: React.FC = () => {
         setMousePosition({ x: mouseX, y: mouseY });
 
         // Actualizar el estado de hover de los hexágonos
-        setHexagons(prevHexagons =>
-            prevHexagons.map(hex => {
+        setHexagons((prevHexagons) =>
+            prevHexagons.map((hex) => {
                 const distance = Math.sqrt(
                     Math.pow(mouseX - (hex.x + HEX_WIDTH / 2), 2) +
                     Math.pow(mouseY - (hex.y + HEX_HEIGHT / 2), 2)
                 );
                 return {
                     ...hex,
-                    isHovered: distance < 100 // Radio de influencia del mouse
+                    isHovered: distance < 120, // Radio de influencia del mouse
                 };
             })
         );
@@ -77,8 +77,8 @@ const HexagonalBackground: React.FC = () => {
     }, [createHexagons, handleMouseMove]);
 
     return (
-        <div className="fixed inset-0 -z-10 bg-gradient-to-br from-gray-900 to-gray-800 overflow-hidden">
-            {hexagons.map(hexagon => (
+        <div className="hexagonal-background fixed inset-0 -z-10 bg-gradient-to-br from-gray-900 to-gray-800 overflow-hidden">
+            {hexagons.map((hexagon) => (
                 <div
                     key={hexagon.id}
                     style={{
@@ -86,15 +86,12 @@ const HexagonalBackground: React.FC = () => {
                         left: `${hexagon.x}px`,
                         top: `${hexagon.y}px`,
                         width: `${HEX_WIDTH}px`,
-                        height: `${HEX_WIDTH}px`,
-                        transform: `scale(${hexagon.isHovered ? 1.2 : 1})`,
+                        height: `${HEX_HEIGHT}px`,
+                        transform: `scale(${hexagon.isHovered ? 1.3 : 1})`,
                         transition: 'transform 0.3s ease-out, background-color 0.3s ease-out',
                     }}
-                    className={`
-            hexagon
-            ${Math.random() > 0.7 ? 'animate-pulse' : ''}
-            ${hexagon.isHovered ? 'bg-blue-500/30' : 'bg-white/10'}
-          `}
+                    className={`hexagon ${Math.random() > 0.7 ? 'animate-pulse' : ''} ${hexagon.isHovered ? 'bg-blue-500/30' : 'bg-white/10'
+                        }`}
                 />
             ))}
         </div>

@@ -1,3 +1,5 @@
+
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -31,4 +33,21 @@
   will-change: transform, background-color;
   backface-visibility: hidden;
   perspective: 1000px;
+}
+
+/* Suavizar la animación de hover */
+a:hover {
+    transition: all 0.3s ease;
+}
+
+/* Estilos para modo claro */
+body.light-mode {
+    background-color: #ffffff;
+    color: #000000;
+}
+
+/* Estilos para modo oscuro */
+body.dark-mode {
+    background-color: #000000;
+    color: #ffffff;
 }
