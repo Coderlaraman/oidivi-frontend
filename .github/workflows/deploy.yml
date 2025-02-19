@@ -19,11 +19,11 @@ jobs:
           echo "${{ secrets.LIGHTSAIL_SSH_KEY }}" > ~/.ssh/lightsail_key
           chmod 600 ~/.ssh/lightsail_key
           # Agrega la IP de tu instancia a los hosts conocidos para evitar interacciones
-          ssh-keyscan -H ${{ vars.LIGHTSAIL_IP }} >> ~/.ssh/known_hosts
+          ssh-keyscan -H ${{ secrets.LIGHTSAIL_IP }} >> ~/.ssh/known_hosts
 
       - name: Deploy to Amazon Lightsail
         run: |
-          ssh -i ~/.ssh/lightsail_key ubuntu@${{ vars.LIGHTSAIL_IP }} << 'EOF'
+          ssh -i ~/.ssh/lightsail_key ubuntu@${{ secrets.LIGHTSAIL_IP }} << 'EOF'
             cd ~/oidivi-frontend
             git pull origin main
             npm install
