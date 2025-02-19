@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: SSH into Amazon Lightsail and pull latest code
+      - name: SSH into Amazon Lightsail and deploy
         uses: appleboy/ssh-action@master
         with:
           host: 3.137.31.20
@@ -18,4 +18,8 @@ jobs:
           key: ${{ secrets.LIGHTSAIL_SSH_KEY }}
           script: |
             cd /home/ubuntu/oidivi-frontend
-            git pull origin main
+            git reset --hard HEAD  # Descarta cualquier cambio local
+            git pull origin main --force  # Fuerza la actualización del código
+            npm install
+            npm run build
+            pm2 restart oidivi-frontend || pm2 start npm --name "oidivi-frontend" -- run start
