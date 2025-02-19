@@ -36,57 +36,24 @@ The easiest way to deploy your Next.js app is to use the [Vercel Platform](https
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
 
 
-
 ```
 oidivi-frontend
-├─ .git
-│  ├─ config
-│  ├─ description
-│  ├─ HEAD
-│  ├─ hooks
-│  │  ├─ applypatch-msg.sample
-│  │  ├─ commit-msg.sample
-│  │  ├─ fsmonitor-watchman.sample
-│  │  ├─ post-update.sample
-│  │  ├─ pre-applypatch.sample
-│  │  ├─ pre-commit.sample
-│  │  ├─ pre-merge-commit.sample
-│  │  ├─ pre-push.sample
-│  │  ├─ pre-rebase.sample
-│  │  ├─ pre-receive.sample
-│  │  ├─ prepare-commit-msg.sample
-│  │  ├─ push-to-checkout.sample
-│  │  ├─ sendemail-validate.sample
-│  │  └─ update.sample
-│  ├─ index
-│  ├─ info
-│  │  └─ exclude
-│  ├─ logs
-│  │  ├─ HEAD
-│  │  └─ refs
-│  │     ├─ heads
-│  │     │  └─ main
-│  │     └─ remotes
-│  │        └─ origin
-│  │           └─ HEAD
-│  ├─ objects
-│  │  ├─ info
-│  │  └─ pack
-│  │     ├─ pack-cf1583929420a8228e48f082633dcae6e254b6eb.idx
-│  │     ├─ pack-cf1583929420a8228e48f082633dcae6e254b6eb.pack
-│  │     └─ pack-cf1583929420a8228e48f082633dcae6e254b6eb.rev
-│  ├─ packed-refs
-│  └─ refs
-│     ├─ heads
-│     │  └─ main
-│     ├─ remotes
-│     │  └─ origin
-│     │     └─ HEAD
-│     └─ tags
-├─ .gitignore
+├─ .idea
+│  ├─ codeStyles
+│  │  ├─ codeStyleConfig.xml
+│  │  └─ Project.xml
+│  ├─ inspectionProfiles
+│  │  └─ Project_Default.xml
+│  ├─ modules.xml
+│  ├─ oidivi-frontend.iml
+│  ├─ php.xml
+│  ├─ prettier.xml
+│  ├─ vcs.xml
+│  └─ workspace.xml
 ├─ .prettierignore
 ├─ .prettierrc.json
 ├─ clear
+├─ contract-preview
 ├─ eslint.config.mjs
 ├─ i18n.ts
 ├─ next.config.ts
@@ -99,13 +66,16 @@ oidivi-frontend
 │  ├─ globe.svg
 │  ├─ images
 │  │  ├─ default_avatar.png
-│  │  └─ logo.jpeg
+│  │  ├─ logo.jpeg
+│  │  └─ logo.png
 │  ├─ locales
 │  │  ├─ en
 │  │  │  └─ translation.json
 │  │  └─ es
 │  │     └─ translation.json
 │  ├─ next.svg
+│  ├─ profile-background-dark.jpg
+│  ├─ profile-background-light.jpg
 │  ├─ vercel.svg
 │  ├─ videos
 │  │  └─ background.mp4
@@ -124,6 +94,8 @@ oidivi-frontend
 │  │  ├─ favicon.ico
 │  │  ├─ layout.tsx
 │  │  ├─ page.tsx
+│  │  ├─ profile
+│  │  │  └─ page.tsx
 │  │  └─ test
 │  │     └─ page.tsx
 │  ├─ components
@@ -132,14 +104,14 @@ oidivi-frontend
 │  │  │  └─ RegisterForm.tsx
 │  │  ├─ dashboard
 │  │  │  └─ Dashboard.tsx
-│  │  ├─ Footer.tsx
-│  │  ├─ Header.tsx
 │  │  ├─ home
 │  │  │  ├─ FeaturesSection.tsx
 │  │  │  ├─ HeroSection.tsx
+│  │  │  ├─ HoneyCombEffect.tsx
 │  │  │  ├─ SearchForm.tsx
 │  │  │  ├─ ServicesSection.tsx
 │  │  │  └─ TestimonialsSection.tsx
+│  │  ├─ LanguageSelector.tsx
 │  │  ├─ layout
 │  │  │  ├─ Footer.tsx
 │  │  │  └─ Navbar.tsx
@@ -159,11 +131,14 @@ oidivi-frontend
 │  ├─ hooks
 │  │  ├─ useDashboard.ts
 │  │  ├─ useLogin.ts
-│  │  └─ useRegister.ts
+│  │  ├─ useRegister.ts
+│  │  ├─ useTheme.ts
+│  │  └─ useUser.ts
 │  ├─ lib
 │  │  └─ api.ts
 │  ├─ styles
-│  │  └─ globals.css
+│  │  ├─ globals.css
+│  │  └─ HoneyCombEffect.module.css
 │  ├─ types
 │  │  └─ index.ts
 │  └─ utils

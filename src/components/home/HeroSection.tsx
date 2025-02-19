@@ -1,5 +1,3 @@
-import Link from "next/link";
-
 const HeroSection = () => {
     return (
         <section className="relative w-full h-screen flex flex-col justify-center items-center text-white text-center">

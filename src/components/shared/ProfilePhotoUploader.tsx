@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPen } from '@fortawesome/free-solid-svg-icons';
 import { uploadProfilePhoto } from '@/lib/api';
+import Image from 'next/image';
 
 interface ProfilePhotoUploaderProps {
   currentPhotoUrl: string;
@@ -47,8 +48,7 @@ const ProfilePhotoUploader: React.FC<ProfilePhotoUploaderProps> = ({
   return (
     <div className="relative">
       {/* Imagen de perfil */}
-      <img
-        src={photoPreview}
+      <Image src={photoPreview}
         alt="Profile"
         className="w-32 h-32 rounded-full object-cover border-4 border-red-600 dark:border-red-700 cursor-pointer"
         onClick={toggleModal}
@@ -93,7 +93,7 @@ const ProfilePhotoUploader: React.FC<ProfilePhotoUploaderProps> = ({
           className="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50"
           onClick={toggleModal}
         >
-          <img
+          <Image
             src={photoPreview}
             alt="Expanded Profile"
             className="max-w-full max-h-full cursor-pointer"

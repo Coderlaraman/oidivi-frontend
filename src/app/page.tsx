@@ -3,6 +3,7 @@
 
 import HoneycombEffect from '../components/home/HoneyCombEffect'
 import Navbar from '../components/layout/Navbar'
+import Image from 'next/image';
 
 export default function Home() {
   return (
@@ -20,7 +21,7 @@ export default function Home() {
           color: '#333'
         }}
       >
-        <img
+        <Image
           src="/images/logo.png"
           alt="OIDIVI HELPER Logo"
           style={{ maxWidth: '450px', marginBottom: '1rem' }}

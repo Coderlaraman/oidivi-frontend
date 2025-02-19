@@ -139,11 +139,20 @@ const EditProfile: React.FC<EditProfileProps> = ({ user, onClose }) => {
             >
               Cancel
             </button>
-            <button
+            {/* <button
               type="submit"
               className="px-4 py-2 bg-gradient-to-r from-red-600 to-red-800 text-white rounded-lg hover:from-red-700 hover:to-red-900"
             >
               Update
+            </button> */}
+
+            <button
+              type="submit"
+              disabled={isSubmitting} // Deshabilitar el botón si isSubmitting es true
+              className={`px-4 py-2 bg-gradient-to-r from-red-600 to-red-800 text-white rounded-lg hover:from-red-700 hover:to-red-900 ${isSubmitting ? 'opacity-50 cursor-not-allowed' : ''
+                }`}
+            >
+              {isSubmitting ? 'Updating...' : 'Update'} {/* Cambiar el texto del botón */}
             </button>
           </div>
 
