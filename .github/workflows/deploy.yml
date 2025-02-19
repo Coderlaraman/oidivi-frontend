@@ -22,4 +22,6 @@ jobs:
             git pull origin main --force  # Fuerza la actualización del código
             npm install
             npm run build
-            pm2 restart oidivi-frontend || pm2 start npm --name "oidivi-frontend" -- run start
+            pm2 delete oidivi-frontend || true
+            pm2 start npm --name "oidivi-frontend" -- run start
+            pm2 save
