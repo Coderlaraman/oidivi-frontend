@@ -21,6 +21,7 @@ export default function Home() {
           color: '#333'
         }}
       >
+        <h1>Hola</h1>
         <Image
           src="/images/logo.png"
           alt="OIDIVI HELPER Logo"
