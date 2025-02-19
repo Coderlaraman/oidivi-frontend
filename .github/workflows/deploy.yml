@@ -1,0 +1,32 @@
+name: Deploy Next.js to Amazon Lightsail
+
+on:
+  push:
+    branches:
+      - main  # Se ejecutará en push a la rama main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up SSH key
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.LIGHTSAIL_SSH_KEY }}" > ~/.ssh/lightsail_key
+          chmod 600 ~/.ssh/lightsail_key
+          # Agrega la IP de tu instancia a los hosts conocidos para evitar interacciones
+          ssh-keyscan -H ${{ vars.LIGHTSAIL_IP }} >> ~/.ssh/known_hosts
+
+      - name: Deploy to Amazon Lightsail
+        run: |
+          ssh -i ~/.ssh/lightsail_key ubuntu@${{ vars.LIGHTSAIL_IP }} << 'EOF'
+            cd ~/oidivi-frontend
+            git pull origin main
+            npm install
+            npm run build
+            pm2 restart oidivi-frontend || pm2 start npm --name "oidivi-frontend" -- run start
+          EOF
