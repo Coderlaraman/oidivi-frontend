@@ -21,6 +21,7 @@ jobs:
             git reset --hard HEAD  # Descarta cualquier cambio local
             git pull origin main --force  # Fuerza la actualización del código
             npm install
+            npx prettier --write .
             npm run build
             pm2 delete oidivi-frontend || true
             pm2 start npm --name "oidivi-frontend" -- run start
