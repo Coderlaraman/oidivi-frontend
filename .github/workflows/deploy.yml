@@ -1,4 +1,4 @@
-name: Deploy Next.js to Amazon Lightsail
+name: Deploy to Lightsail
 
 on:
   push:
@@ -8,22 +8,35 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-
+    
     steps:
-    - name: 📥 Clonar el repositorio
-      uses: actions/checkout@v4
-
-    - name: 🔑 Configurar acceso SSH
-      run: |
-        echo "${{ secrets.LIGHTSAIL_SSH_KEY }}" > lightsail_key
-        chmod 600 lightsail_key
-
-    - name: 🚀 Desplegar en Lightsail
-      run: |
-        ssh -i lightsail_key -o StrictHostKeyChecking=no ${{ secrets.LIGHTSAIL_HOST }} << 'EOF'
-          cd ~/oidivi-frontend
-          git pull origin main
-          npm install
-          npm run build
-          pm2 restart oidivi-frontend
-        EOF
+      - name: Checkout código
+        uses: actions/checkout@v2
+      
+      - name: Configurar Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '18'
+          
+      - name: Instalar dependencias
+        run: npm install
+        
+      - name: Construir aplicación
+        run: npm run build
+        
+      - name: Configurar SSH
+        run: |
+          mkdir -p ~/.ssh/
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/deploy_key
+          chmod 600 ~/.ssh/deploy_key
+          echo "${{ secrets.SSH_KNOWN_HOSTS }}" > ~/.ssh/known_hosts
+          
+      - name: Desplegar a Lightsail
+        run: |
+          ssh -i ~/.ssh/deploy_key ubuntu@3.137.31.20 '
+            cd ~/oidivi-frontend &&
+            git pull origin main &&
+            npm install &&
+            npm run build &&
+            pm2 restart oidivi-frontend
+          '
