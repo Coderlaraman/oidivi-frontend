@@ -148,3 +148,8 @@ oidivi-frontend
 └─ tsconfig.json
 
 ```
+
+
+# OiDiVi Frontend
+
+Despliegue automático configurado con GitHub Actions 🚀

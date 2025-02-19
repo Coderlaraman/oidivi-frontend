@@ -24,6 +24,7 @@ export default function Home() {
         <Image
           src="/images/logo.png"
           alt="OIDIVI HELPER Logo"
+          width={450} height={300}
           style={{ maxWidth: '450px', marginBottom: '1rem' }}
         />
         <h1 className='text-3xl font-bold text-red-500 dark:text-gray-200'>
