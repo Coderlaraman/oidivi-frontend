@@ -21,7 +21,7 @@ export default function Home() {
           color: '#333'
         }}
       >
-        <h1 className="text-gray-200 text-3xl">Hola Prueba 2</h1>
+
         <Image
           src="/images/logo.png"
           alt="OIDIVI HELPER Logo"
