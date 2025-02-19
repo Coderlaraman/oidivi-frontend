@@ -17,5 +17,5 @@ jobs:
           username: ubuntu
           key: ${{ secrets.LIGHTSAIL_SSH_KEY }}
           script: |
-            cd /oidivi-frontend
+            cd /home/ubuntu/oidivi-frontend
             git pull origin main
