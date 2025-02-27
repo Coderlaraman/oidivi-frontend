@@ -15,6 +15,7 @@ const ProfileVideoUploader: React.FC<ProfileVideoUploaderProps> = ({
   const [videoPreview, setVideoPreview] = useState(currentVideoUrl);
   const [newVideo, setNewVideo] = useState<File | null>(null);
   const [message, setMessage] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleVideoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
@@ -27,6 +28,7 @@ const ProfileVideoUploader: React.FC<ProfileVideoUploaderProps> = ({
 
   const handleSaveVideo = async () => {
     if (!newVideo) return;
+    setIsLoading(true);
     setMessage('');
     try {
       await uploadProfileVideo(newVideo);
@@ -35,6 +37,8 @@ const ProfileVideoUploader: React.FC<ProfileVideoUploaderProps> = ({
       setNewVideo(null);
     } catch {
       setMessage('Failed to update video. Please try again.');
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -68,9 +72,11 @@ const ProfileVideoUploader: React.FC<ProfileVideoUploaderProps> = ({
       {newVideo && (
         <button
           onClick={handleSaveVideo}
-          className="mt-2 px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600"
+          disabled={isLoading}
+          className={`mt-2 px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 ${isLoading ? 'opacity-50 cursor-not-allowed' : ''
+            }`}
         >
-          Save Video
+          {isLoading ? 'Uploading...' : 'Save Video'}
         </button>
       )}
       {message && <p className="text-red-500">{message}</p>}

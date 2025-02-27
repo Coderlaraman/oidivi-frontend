@@ -1,0 +1,76 @@
+📌 Reglas de Negocio de OiDiVi Helper
+1️⃣ Usuarios y Roles
+•	Se identifican dos tipos de usuarios principales:
+o	Usuarios comunes: Buscan servicios y contratan helpers.
+o	Helpers: Ofrecen sus servicios en la plataforma.
+•	El sistema debe permitir la creación y gestión de perfiles para ambos tipos de usuarios.
+•	Implementación de verificación de identidad mediante correo electrónico o número de teléfono.
+•	Ubicación basada en ZIP code, permitiendo a los usuarios y helpers operar en regiones específicas.
+________________________________________
+2️⃣ Publicación y Contratación de Servicios
+•	Los usuarios pueden publicar ofertas de servicios detalladas, indicando:
+o	Descripción del trabajo a realizar.
+o	Ubicación y requisitos específicos.
+o	Fecha y presupuesto estimado.
+•	Los helpers pueden aceptar ofertas y comunicarse con el usuario antes de cerrar un trato.
+•	Se debe incluir una funcionalidad de visibilidad para controlar la privacidad de las ofertas.
+________________________________________
+3️⃣ Búsqueda y Filtrado Avanzado
+•	Los usuarios deben poder buscar servicios y helpers mediante:
+o	Texto libre.
+o	Filtros avanzados por ubicación (ZIP code), categoría de servicio, calificación y precio.
+•	Uso de Google Maps API para mostrar ubicaciones de helpers cercanos.
+•	Implementación de un radio de búsqueda dinámico basado en la distancia entre usuario y helper.
+________________________________________
+4️⃣ Comunicación entre Usuarios
+•	Sistema de mensajería instantánea para facilitar la negociación entre usuarios y helpers.
+•	Notificaciones push para alertar sobre mensajes nuevos, confirmaciones de servicio y actualizaciones.
+•	Se debe permitir el envío de archivos adjuntos en la mensajería (ejemplo: imágenes de trabajos previos).
+________________________________________
+5️⃣ Gestión de Pagos y Facturación
+•	Integración con pasarelas de pago seguras (Stripe, PayPal, etc.).
+•	Posibilidad de realizar pagos directos desde la plataforma.
+•	Generación automática de facturas electrónicas tras cada transacción.
+•	Implementación de un sistema de retención de pagos hasta la confirmación de servicio satisfactorio.
+________________________________________
+6️⃣ Calificación y Reputación
+•	Implementación de un sistema de calificación de 1 a 5 estrellas.
+•	Se deben permitir reseñas escritas para dar retroalimentación sobre helpers y clientes.
+•	Cálculo de reputación basado en las calificaciones y comentarios obtenidos.
+________________________________________
+7️⃣ Seguridad y Privacidad
+•	Los datos personales deben estar protegidos conforme a normativas internacionales de privacidad.
+•	Implementación de autenticación y control de acceso robustos.
+•	Verificación manual de perfiles de helpers para evitar fraudes.
+•	Encriptación de datos sensibles en las bases de datos.
+________________________________________
+📌 Funcionalidades Clave de la Plataforma
+OiDiVi Helper Web (Plataforma Principal)
+✅ Interfaz web intuitiva optimizada para una experiencia de usuario fluida.
+✅ Integración con OiDiVi Skills para mostrar perfiles de helpers con:
+•	Documentos (PDFs, currículum).
+•	Imágenes (certificaciones, muestras de trabajo).
+•	Videos (demostraciones de habilidades).
+✅ Soporte para diferentes idiomas para permitir la expansión global.
+✅ Panel de administración para la gestión de usuarios, pagos y contenido.
+________________________________________
+OiDiVi Helper Mobile (Aplicación Móvil)
+✅ Funcionalidad en tiempo real sincronizada con la web.
+✅ Geolocalización avanzada para mostrar la ubicación de los usuarios y helpers en tiempo real.
+✅ Notificaciones push para recordar eventos importantes (mensajes, pagos, cambios de estado).
+✅ Modo offline para permitir a los usuarios revisar información sin conexión.
+________________________________________
+📌 Interacciones Clave entre Funcionalidades
+🔗 Publicación de servicios ↔ Búsqueda avanzada: Los usuarios deben poder encontrar servicios fácilmente mediante filtros y búsqueda por texto.
+🔗 Contratación ↔ Pagos seguros: Un usuario solo podrá pagar una vez que un helper acepte su oferta.
+🔗 Mensajería ↔ Geolocalización: Permite verificar la cercanía entre usuario y helper antes de aceptar un servicio.
+🔗 Sistema de calificaciones ↔ Reputación de usuario: Un mayor puntaje mejora la visibilidad de un helper en las búsquedas.
+🔗 Verificación de identidad ↔ Seguridad: Solo usuarios verificados podrán publicar y contratar servicios.
+________________________________________
+📌 Buenas Prácticas a Seguir
+📌 Modularidad y escalabilidad: La arquitectura debe permitir agregar nuevas funciones sin afectar el sistema actual.
+📌 UX/UI optimizada: La interfaz debe ser clara y amigable para garantizar la mejor experiencia de usuario.
+📌 Pruebas automatizadas: Se recomienda usar pruebas unitarias y de integración para asegurar la estabilidad del sistema.
+📌 Código limpio y documentado: Todo el código debe ser legible y contar con documentación para facilitar futuras actualizaciones.
+📌 Monitorización y métricas: Se debe integrar un sistema de monitoreo para evaluar el rendimiento y detectar posibles errores.
+

@@ -1,48 +1,54 @@
-/* app/components/HoneycombEffect.module.css */
-
-.honeycombContainer {
+.animatedBackground {
   position: relative;
   width: 100%;
-  height: 100vh;
+  height: 100%;
   overflow: hidden;
-  background-color: #cecdcd; /* Fondo para modo claro por defecto */
-}
 
-/* Aplica fondo oscuro si el sistema prefiere dark mode */
-@media (prefers-color-scheme: dark) {
-  .honeycombContainer {
-    background-color: #141414;
-  }
-}
+  /* Fondo base para modo claro */
+  background-color: #cecdcd;
 
-.hex {
-  position: absolute;
-  width: 95px;  /* Ajusta según tu valor de hexWidth */
-  height: 80px; /* Ajusta según tu valor de hexHeight */
-}
-
-.shape {
-  width: 108%;
-  height: 104%;
-  clip-path: polygon(
-    50% 0%,
-    93% 25%,
-    93% 75%,
-    50% 100%,
-    7% 75%,
-    7% 25%
+  /*
+    Ejemplo de líneas diagonales con un gradiente repetido.
+    - 135deg define la dirección de las líneas.
+    - Ajusta la opacidad, el grosor y el espaciamiento a tu gusto.
+  */
+  background-image: repeating-linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.3) 0,
+    rgba(255, 255, 255, 0.3) 2px,
+    transparent 2px,
+    transparent 20px
   );
-  transition: transform 0.5s, box-shadow 0.2s;
+
+  /*
+    Animación lenta (60s) para que sea sutil.
+    - moveBackground recorre la posición del fondo de (0,0) a (800,800) en 60s.
+    - linear e infinite hace que sea continuo y uniforme.
+  */
+  animation: moveBackground 60s linear infinite;
 }
 
-/* Estilo base para el hexágono (modo claro) */
-.hexShape {
-  background: linear-gradient(135deg, #c5c5c5, #ffffff);
-}
-
-/* Sobrescribe el estilo para modo oscuro usando la media query */
-@media (prefers-color-scheme: dark) {
-  .hexShape {
-    background: linear-gradient(135deg, #333333, #222222);
+/* Keyframes para el movimiento suave del fondo */
+@keyframes moveBackground {
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: 800px 800px;
   }
 }
+
+/* Modo oscuro */
+@media (prefers-color-scheme: dark) {
+  .animatedBackground {
+    background-color: #141414;
+    background-image: repeating-linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.05) 0,
+      rgba(255, 255, 255, 0.05) 2px,
+      transparent 2px,
+      transparent 20px
+    );
+  }
+}
+

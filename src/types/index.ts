@@ -8,6 +8,6 @@ export interface User {
   latitude: number;
   longitude: number;
   roles: string[];
-  profile_photo_url?: string; // Agregado opcional para url de imagen
-  profile_video_url?: string; // Agregado opcional para url de video
+  profile_photo_url: string | null; // De undefined a null
+  profile_video_url: string | null; // De undefined a null
 }

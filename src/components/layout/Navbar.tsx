@@ -35,12 +35,12 @@ const Navbar: React.FC = () => {
           {/* Parte Derecha: Enlaces Login/Register y botón para menú móvil */}
           <div className="flex items-center font-semibold">
             <div className="hidden md:flex space-x-4">
-              <Link href="/login" className="text-gray-800 dark:text-gray-200 hover:text-red-600 transition-colors">
+              {/* <Link href="/login" className="text-gray-800 dark:text-gray-200 hover:text-red-600 transition-colors">
                 Login
               </Link>
               <Link href="/register" className="text-gray-800 dark:text-gray-200 hover:text-red-600 transition-colors">
                 Register
-              </Link>
+              </Link> */}
             </div>
 
             {/* Botón menú móvil (visible en pantallas pequeñas) */}
@@ -70,46 +70,46 @@ const Navbar: React.FC = () => {
       {/* Menú móvil: se muestra solo en pantallas pequeñas */}
       {mobileMenuOpen && (
         <div className="md:hidden font-semibold bg-gray-200 bg-opacity-75 dark:bg-gray-700 dark:bg-opacity-75">
-        <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-          <Link
-            href="/"
-            className="block text-gray-800 dark:text-gray-200 hover:bg-red-600 dark:hover:bg-red-500 hover:text-white px-3 py-2 rounded-md transition-colors"
-          >
-            Home
-          </Link>
-          <Link
-            href="/about"
-            className="block text-gray-800 dark:text-gray-200 hover:bg-red-600 dark:hover:bg-red-500 hover:text-white px-3 py-2 rounded-md transition-colors"
-          >
-            About
-          </Link>
-          <Link
-            href="/services"
-            className="block text-gray-800 dark:text-gray-200 hover:bg-red-600 dark:hover:bg-red-500 hover:text-white px-3 py-2 rounded-md transition-colors"
-          >
-            Services
-          </Link>
-          <Link
-            href="/contact"
-            className="block text-gray-800 dark:text-gray-200 hover:bg-red-600 dark:hover:bg-red-500 hover:text-white px-3 py-2 rounded-md transition-colors"
-          >
-            Contact
-          </Link>
-          <Link
-            href="/login"
-            className="block text-gray-800 dark:text-gray-200 hover:bg-red-600 dark:hover:bg-red-500 hover:text-white px-3 py-2 rounded-md transition-colors"
-          >
-            Login
-          </Link>
-          <Link
-            href="/register"
-            className="block text-gray-800 dark:text-gray-200 hover:bg-red-600 dark:hover:bg-red-500 hover:text-white px-3 py-2 rounded-md transition-colors"
-          >
-            Register
-          </Link>
+          <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+            <Link
+              href="/"
+              className="block text-gray-800 dark:text-gray-200 hover:bg-red-600 dark:hover:bg-red-500 hover:text-white px-3 py-2 rounded-md transition-colors"
+            >
+              Home
+            </Link>
+            <Link
+              href="/about"
+              className="block text-gray-800 dark:text-gray-200 hover:bg-red-600 dark:hover:bg-red-500 hover:text-white px-3 py-2 rounded-md transition-colors"
+            >
+              About
+            </Link>
+            <Link
+              href="/services"
+              className="block text-gray-800 dark:text-gray-200 hover:bg-red-600 dark:hover:bg-red-500 hover:text-white px-3 py-2 rounded-md transition-colors"
+            >
+              Services
+            </Link>
+            <Link
+              href="/contact"
+              className="block text-gray-800 dark:text-gray-200 hover:bg-red-600 dark:hover:bg-red-500 hover:text-white px-3 py-2 rounded-md transition-colors"
+            >
+              Contact
+            </Link>
+            <Link
+              href="/login"
+              className="block text-gray-800 dark:text-gray-200 hover:bg-red-600 dark:hover:bg-red-500 hover:text-white px-3 py-2 rounded-md transition-colors"
+            >
+              Login
+            </Link>
+            <Link
+              href="/register"
+              className="block text-gray-800 dark:text-gray-200 hover:bg-red-600 dark:hover:bg-red-500 hover:text-white px-3 py-2 rounded-md transition-colors"
+            >
+              Register
+            </Link>
+          </div>
         </div>
-      </div>
-      
+
       )}
     </nav>
   );

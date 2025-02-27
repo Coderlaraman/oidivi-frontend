@@ -1,53 +1,7 @@
-// import { useState, useEffect } from 'react';
-// import api from '../lib/api';
-// import { useRouter } from 'next/navigation';
-// import { User } from '../types/index';
-
-// const useDashboard = () => {
-//   const [user, setUser] = useState<User | null>(null); // Define el tipo para el usuario
-//   const [loading, setLoading] = useState(true);
-//   const [error, setError] = useState<string | null>(null);
-//   const router = useRouter();
-
-//   const fetchUser = async () => {
-//     setLoading(true);
-//     setError(null);
-
-//     try {
-//       const response = await api.get('/me'); // Llama al endpoint para obtener los datos del usuario
-//       setUser(response.data.data); // Establece el usuario en el estado
-//       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-//     } catch (err: any) {
-//       if (err.response?.status === 401) {
-//         localStorage.removeItem('authToken');
-//         router.push('/login');
-//       } else {
-//         setError('Error fetching user data.');
-//       }
-//     } finally {
-//       setLoading(false);
-//     }
-//   };
-
-//   useEffect(() => {
-//     const token = localStorage.getItem('authToken');
-//     if (!token) {
-//       router.push('/login');
-//     } else {
-//       fetchUser();
-//     }
-//   }, []);
-
-//   return { user, loading, error };
-// };
-
-// export default useDashboard;
-
-
 import { useState, useEffect, useCallback } from 'react';
-import api from '../lib/api';
+import api from '@/lib/api';
 import { useRouter } from 'next/navigation';
-import { User } from '../types/index';
+import { User } from '@/types';
 
 const useDashboard = () => {
   const [user, setUser] = useState<User | null>(null);
@@ -55,19 +9,19 @@ const useDashboard = () => {
   const [error, setError] = useState<string | null>(null);
   const router = useRouter();
 
-  // Memoizamos fetchUser con useCallback para evitar recreaciones innecesarias
+  // Función para obtener los datos del usuario
   const fetchUser = useCallback(async () => {
     setLoading(true);
     setError(null);
 
     try {
-      const response = await api.get('/me');
-      setUser(response.data.data);
+      const response = await api.get('/me'); // Endpoint para obtener los datos del usuario
+      setUser(response.data.data); // Guardar los datos del usuario en el estado
     } catch (err: unknown) {
-      // Tipado más seguro para el error
       if (err instanceof Error) {
         const error = err as { response?: { status: number } };
         if (error.response?.status === 401) {
+          // Si el usuario no está autenticado, redirigir al login
           localStorage.removeItem('authToken');
           router.push('/login');
         } else {
@@ -79,20 +33,21 @@ const useDashboard = () => {
     } finally {
       setLoading(false);
     }
-  }, [router]); // router como dependencia de useCallback
+  }, [router]);
 
+  // Efecto para verificar la autenticación y cargar los datos del usuario
   useEffect(() => {
     const checkAuthAndFetchUser = async () => {
       const token = localStorage.getItem('authToken');
       if (!token) {
-        router.push('/login');
+        router.push('/login'); // Redirigir al login si no hay token
         return;
       }
-      await fetchUser();
+      await fetchUser(); // Cargar los datos del usuario
     };
 
     checkAuthAndFetchUser();
-  }, [router, fetchUser]); // Incluimos las dependencias necesarias
+  }, [router, fetchUser]);
 
   return { user, loading, error };
 };
