@@ -68,8 +68,8 @@ export default function LoginForm() {
     <div
       className="
         w-full max-w-md
-        bg-white dark:bg-gray-900
-        shadow-lg shadow-gray-500 dark:shadow-gray-700
+        bg-[#ffffff]/40 dark:bg-[#000000]/40
+        shadow-lg shadow-gray-500 dark:shadow-gray-800
         rounded-xl
         p-6 md:p-8
         backdrop-blur-md
@@ -82,14 +82,16 @@ export default function LoginForm() {
 
       {/* Logo Responsivo */}
       <div className="flex justify-center mb-4">
-        <Image
-          src="/images/logo.png"
-          alt="OiDiVi Helper Logo"
-          width={250}
-          height={150}
-          className="mx-auto max-w-[200px] md:max-w-[250px] h-auto"
-          priority
-        />
+        <Link href="/">
+          <Image
+            src="/images/logo.png"
+            alt="OiDiVi Helper Logo"
+            width={250}
+            height={150}
+            className="mx-auto max-w-[200px] md:max-w-[250px] h-auto cursor-pointer"
+            priority
+          />
+        </Link>
       </div>
 
       <form noValidate onSubmit={handleSubmit} className="space-y-5">
@@ -107,9 +109,10 @@ export default function LoginForm() {
             id="email"
             className={`
               w-full rounded-md border px-3 py-2 transition-all
-              ${errors.email
-                ? 'border-red-500 focus:ring-red-500'
-                : 'border-gray-300 dark:border-gray-700 focus:ring-red-600'
+              ${
+                errors.email
+                  ? 'border-red-500 focus:ring-red-500'
+                  : 'border-gray-300 dark:border-gray-700 focus:ring-red-600'
               }
               bg-gray-50 dark:bg-gray-800 text-gray-800 dark:text-gray-100
               placeholder-gray-400 dark:placeholder-gray-500
@@ -118,7 +121,9 @@ export default function LoginForm() {
             onChange={handleInputChange}
             aria-invalid={!!errors.email}
           />
-          {errors.email && <p className="text-red-500 text-sm mt-1">{errors.email}</p>}
+          {errors.email && (
+            <p className="text-red-500 text-sm mt-1">{errors.email}</p>
+          )}
         </div>
 
         {/* Password */}
@@ -135,9 +140,10 @@ export default function LoginForm() {
             id="password"
             className={`
               w-full rounded-md border px-3 py-2 transition-all
-              ${errors.password
-                ? 'border-red-500 focus:ring-red-500'
-                : 'border-gray-300 dark:border-gray-700 focus:ring-red-600'
+              ${
+                errors.password
+                  ? 'border-red-500 focus:ring-red-500'
+                  : 'border-gray-300 dark:border-gray-700 focus:ring-red-600'
               }
               bg-gray-50 dark:bg-gray-800 text-gray-800 dark:text-gray-100
               placeholder-gray-400 dark:placeholder-gray-500
@@ -146,7 +152,9 @@ export default function LoginForm() {
             onChange={handleInputChange}
             aria-invalid={!!errors.password}
           />
-          {errors.password && <p className="text-red-500 text-sm mt-1">{errors.password}</p>}
+          {errors.password && (
+            <p className="text-red-500 text-sm mt-1">{errors.password}</p>
+          )}
         </div>
 
         {/* Remember Me & Forgot Password */}
@@ -156,12 +164,17 @@ export default function LoginForm() {
               type="checkbox"
               name="remember_me"
               id="remember_me"
-              className="h-4 w-4 text-red-600 border-gray-300 dark:border-gray-700 rounded focus:ring-2 focus:ring-red-600 focus:outline-none"
+              className="h-4 w-4 text-red-600 border-gray-300 dark:border-gray-700 rounded focus:ring-1 focus:ring-red-600 focus:outline-none"
               onChange={handleInputChange}
             />
-            <span className="ml-2 text-sm text-gray-700 dark:text-gray-300">Remember me</span>
+            <span className="ml-2 text-sm text-gray-700 dark:text-gray-300">
+              Remember me
+            </span>
           </label>
-          <Link href="/forgot-password" className="text-sm text-red-600 dark:text-red-400 hover:underline">
+          <Link
+            href="/forgot-password"
+            className="text-sm text-red-600 dark:text-red-400 hover:underline"
+          >
             Forgot password?
           </Link>
         </div>
@@ -206,7 +219,11 @@ export default function LoginForm() {
         </button>
 
         {/* Error Message */}
-        {error && <p className="text-red-500 text-center mt-3">{error.email || error.password || 'Login failed.'}</p>}
+        {error && (
+          <p className="text-red-500 text-center mt-3">
+            {error.email || error.password || 'Login failed.'}
+          </p>
+        )}
       </form>
     </div>
   );

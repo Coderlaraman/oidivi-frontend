@@ -32,8 +32,12 @@ const useRegister = () => {
           : { 'Content-Type': 'application/json' };
 
       const response = await api.post('/register', data, { headers });
-      setSuccessMessage(response.data.message);
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+
+      if (response.data?.message) {
+        setSuccessMessage(response.data.message); // Asegurarse de que el mensaje existe
+      } else {
+        setSuccessMessage('Registration successful!'); // Mensaje por defecto si no viene en la respuesta
+      }
     } catch (err: any) {
       setError(err.response?.data?.errors || null);
     } finally {

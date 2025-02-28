@@ -33,21 +33,27 @@ const AddressInput: React.FC<AddressInputProps> = ({
   // Función para llamar a la API de Autocomplete de LocationIQ
   const fetchSuggestions = async (value: string) => {
     try {
-      const response = await axios.get('https://us1.locationiq.com/v1/autocomplete', {
-        params: {
-          key: process.env.NEXT_PUBLIC_LOCATIONIQ_API_KEY, // Tu token en .env.local
-          q: value,
-          limit: 5,
-          format: 'json',
-        },
-      });
+      const response = await axios.get(
+        'https://us1.locationiq.com/v1/autocomplete',
+        {
+          params: {
+            key: process.env.NEXT_PUBLIC_LOCATIONIQ_API_KEY, // Tu token en .env.local
+            q: value,
+            limit: 5,
+            format: 'json',
+          },
+        }
+      );
       setSuggestions(response.data);
     } catch (error) {
       console.error('Error al obtener sugerencias:', error);
     }
   };
 
-  const debouncedFetchSuggestions = useCallback(debounce(fetchSuggestions, 300), []);
+  const debouncedFetchSuggestions = useCallback(
+    debounce(fetchSuggestions, 300),
+    []
+  );
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
@@ -62,14 +68,17 @@ const AddressInput: React.FC<AddressInputProps> = ({
   // Función para obtener el código postal mediante Reverse Geocoding
   const getPostalCode = async (lat: string, lon: string) => {
     try {
-      const response = await axios.get('https://us1.locationiq.com/v1/reverse', {
-        params: {
-          key: process.env.NEXT_PUBLIC_LOCATIONIQ_API_KEY,
-          lat,
-          lon,
-          format: 'json',
-        },
-      });
+      const response = await axios.get(
+        'https://us1.locationiq.com/v1/reverse',
+        {
+          params: {
+            key: process.env.NEXT_PUBLIC_LOCATIONIQ_API_KEY,
+            lat,
+            lon,
+            format: 'json',
+          },
+        }
+      );
       return response.data.address.postcode || '';
     } catch (error) {
       console.error('Error al obtener el código postal:', error);
@@ -105,14 +114,13 @@ const AddressInput: React.FC<AddressInputProps> = ({
 
   return (
     <div>
-      <label className="block text-sm font-medium mb-1">Dirección</label>
       <input
         ref={inputRef}
         type="text"
-        placeholder="Ingresa tu dirección"
+        placeholder="Enter your address"
         value={query}
         onChange={handleInputChange}
-        className={`block w-full p-3 border border-gray-300 rounded bg-gray-300 dark:bg-gray-700 text-gray-700 dark:text-gray-300 focus:ring-2 focus:ring-red-500 focus:outline-none ${inputClassName}`}
+        className={`block w-full p-3 border border-gray-300 rounded bg-gray-300 dark:bg-gray-700 text-gray-700 dark:text-gray-300 focus:ring-1 focus:ring-red-500 focus:outline-none ${inputClassName}`}
       />
       {suggestions.length > 0 && (
         <ul className="border mt-2 rounded-lg shadow">
@@ -120,7 +128,7 @@ const AddressInput: React.FC<AddressInputProps> = ({
             <li
               key={suggestion.place_id}
               onClick={() => handleSuggestionClick(suggestion)}
-              className="p-2 cursor-pointer hover:bg-gray-200"
+              className="p-2 cursor-pointer hover:bg-gray-500"
             >
               {suggestion.display_name}
             </li>
