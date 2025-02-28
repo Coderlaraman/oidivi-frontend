@@ -1,7 +1,7 @@
-'use client';
+"use client";
 
-import React, { useState } from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import React, { useState } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faHome,
   faSearch,
@@ -11,29 +11,29 @@ import {
   faWallet,
   faStar,
   faCog,
-} from '@fortawesome/free-solid-svg-icons';
+} from "@fortawesome/free-solid-svg-icons";
 
 interface SidebarDesktopProps {
   onEditProfile: () => void;
 }
 
 const sidebarOptions = [
-  { label: 'Dashboard', icon: faHome, route: '/dashboard' },
-  { label: 'Search Services', icon: faSearch, route: '/services' },
-  { label: 'Post a Job', icon: faPlusCircle, route: '/post-job' },
-  { label: 'My Jobs', icon: faClipboardList, route: '/my-jobs' },
-  { label: 'Messages', icon: faComments, route: '/messages' },
-  { label: 'Transactions', icon: faWallet, route: '/transactions' },
-  { label: 'Reviews', icon: faStar, route: '/reviews' },
-  { label: 'Settings', icon: faCog, route: '/settings' },
+  { label: "Dashboard", icon: faHome, route: "/dashboard" },
+  { label: "Search Services", icon: faSearch, route: "/services" },
+  { label: "Post a Job", icon: faPlusCircle, route: "/post-job" },
+  { label: "My Jobs", icon: faClipboardList, route: "/my-jobs" },
+  { label: "Messages", icon: faComments, route: "/messages" },
+  { label: "Transactions", icon: faWallet, route: "/transactions" },
+  { label: "Reviews", icon: faStar, route: "/reviews" },
+  { label: "Settings", icon: faCog, route: "/settings" },
 ];
 
 const SidebarDesktop: React.FC<SidebarDesktopProps> = ({ onEditProfile }) => {
-  const [activeOption, setActiveOption] = useState('/dashboard');
+  const [activeOption, setActiveOption] = useState("/dashboard");
 
   const handleOptionClick = (route: string) => {
     setActiveOption(route);
-    if (route === '/edit-profile') {
+    if (route === "/edit-profile") {
       onEditProfile();
     }
     console.log(`Navigating to: ${route}`);
@@ -48,8 +48,8 @@ const SidebarDesktop: React.FC<SidebarDesktopProps> = ({ onEditProfile }) => {
             onClick={() => handleOptionClick(option.route)}
             className={`flex items-center py-2 px-4 rounded-lg ${
               activeOption === option.route
-                ? 'bg-red-600 text-white'
-                : 'bg-gray-200 text-gray-900 dark:bg-gray-700 dark:text-gray-200 hover:bg-gray-300 dark:hover:bg-gray-600'
+                ? "bg-red-600 text-white cursor-pointer hover:bg-red-700"
+                : "bg-gray-200 text-gray-900 dark:bg-gray-700 dark:text-gray-200 hover:bg-gray-300 dark:hover:bg-gray-600 cursor-pointer"
             }`}
           >
             <FontAwesomeIcon icon={option.icon} className="mr-3" />

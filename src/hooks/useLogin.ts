@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import api from '../lib/api';
+import { useState } from "react";
+import api from "../lib/api";
 
 interface LoginData {
   email: string;
@@ -18,13 +18,13 @@ const useLogin = () => {
     setSuccess(false);
 
     try {
-      const response = await api.post('/login', data, {
-        headers: { 'Content-Type': 'application/json' },
+      const response = await api.post("/login", data, {
+        headers: { "Content-Type": "application/json" },
       });
 
       const token = response.data.data.token; // Accede correctamente al token
       if (token) {
-        localStorage.setItem('authToken', token); // Guarda el token en localStorage
+        localStorage.setItem("authToken", token); // Guarda el token en localStorage
       }
 
       setSuccess(true);

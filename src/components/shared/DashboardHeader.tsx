@@ -1,8 +1,8 @@
-'use client';
+"use client";
 
-import React from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBars, faTimes } from '@fortawesome/free-solid-svg-icons';
+import React from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faBars, faTimes } from "@fortawesome/free-solid-svg-icons";
 
 interface DashboardHeaderProps {
   onToggleSidebar: () => void;
@@ -14,8 +14,8 @@ const DashboardHeader: React.FC<DashboardHeaderProps> = ({
   isSidebarOpen,
 }) => {
   const handleLogout = () => {
-    localStorage.removeItem('authToken');
-    window.location.href = '/login';
+    localStorage.removeItem("authToken");
+    window.location.href = "/login";
   };
 
   return (

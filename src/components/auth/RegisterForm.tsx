@@ -1,25 +1,26 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
-import { useEffect } from 'react';
-import { useRouter } from 'next/navigation';
-import AddressInput from '@/components/shared/AddressInput';
-import Image from 'next/image';
-import Link from 'next/link';
-import useRegister from '@/hooks/useRegister';
-import Swal from 'sweetalert2'; // Importar SweetAlert2
+import { useState } from "react";
+import { useEffect } from "react";
+import { useRouter } from "next/navigation";
+import AddressInput from "@/components/shared/AddressInput";
+import Image from "next/image";
+import Link from "next/link";
+import useRegister from "@/hooks/useRegister";
+import Swal from "sweetalert2";
+import { AddressLocation } from "@/types";
 
 export default function RegisterForm() {
   const router = useRouter();
-  const { register, loading, error, successMessage } = useRegister();
+  const { register, loading, successMessage } = useRegister();
   const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    phone: '',
-    password: '',
-    password_confirmation: '',
-    address: '',
-    zip_code: '',
+    name: "",
+    email: "",
+    phone: "",
+    password: "",
+    password_confirmation: "",
+    address: "",
+    zip_code: "",
     latitude: 0,
     longitude: 0,
     accepted_terms: false,
@@ -31,17 +32,14 @@ export default function RegisterForm() {
     const { name, value, type, checked } = e.target;
     setFormData((prev) => ({
       ...prev,
-      [name]: type === 'checkbox' ? checked : value,
+      [name]: type === "checkbox" ? checked : value,
     }));
   };
 
-  const handleAddressSelected = (location: any) => {
+  const handleAddressSelected = (location: AddressLocation) => {
     setFormData((prev) => ({
       ...prev,
-      address: location.address,
-      zip_code: location.zip_code,
-      latitude: location.latitude,
-      longitude: location.longitude,
+      ...location, // No se necesita especificar cada campo, porque location ya los tiene
     }));
     setFormError(null);
   };
@@ -51,39 +49,39 @@ export default function RegisterForm() {
 
     // Validación del nombre
     if (!formData.name || formData.name.trim().length < 2) {
-      setFormError('Please provide a valid name (at least 2 characters).');
+      setFormError("Please provide a valid name (at least 2 characters).");
       return;
     }
 
     if (!formData.email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
-      setFormError('Please provide a valid email address.');
+      setFormError("Please provide a valid email address.");
       return;
     }
 
     if (!formData.phone) {
-      setFormError('Please provide a valid phone number.');
+      setFormError("Please provide a valid phone number.");
       return;
     }
 
     // Validación de la contraseña
     if (!formData.password || formData.password.length < 6) {
-      setFormError('Password must be at least 6 characters long.');
+      setFormError("Password must be at least 6 characters long.");
       return;
     }
 
     // Validación de la confirmación de la contraseña
     if (formData.password !== formData.password_confirmation) {
-      setFormError('Passwords do not match.');
+      setFormError("Passwords do not match.");
       return;
     }
 
     if (!formData.zip_code) {
-      setFormError('Please select a valid address with a ZIP code.');
+      setFormError("Please select a valid address with a ZIP code.");
       return;
     }
 
     if (!formData.accepted_terms) {
-      setFormError('You must accept the terms and conditions to register.');
+      setFormError("You must accept the terms and conditions to register.");
       return;
     }
 
@@ -95,27 +93,27 @@ export default function RegisterForm() {
     if (successMessage) {
       // Limpiar los campos del formulario
       setFormData({
-        name: '',
-        email: '',
-        phone: '',
-        password: '',
-        password_confirmation: '',
-        address: '',
-        zip_code: '',
+        name: "",
+        email: "",
+        phone: "",
+        password: "",
+        password_confirmation: "",
+        address: "",
+        zip_code: "",
         latitude: 0,
         longitude: 0,
         accepted_terms: false,
       });
 
       Swal.fire({
-        title: 'Registration Successful!',
+        title: "Registration Successful!",
         text: successMessage,
-        icon: 'success',
-        confirmButtonText: 'OK',
+        icon: "success",
+        confirmButtonText: "OK",
         timer: 3000,
         timerProgressBar: true,
       }).then(() => {
-        router.push('/dashboard'); // Redirigir al dashboard después de cerrar el alert
+        router.push("/dashboard"); // Redirigir al dashboard después de cerrar el alert
       });
     }
   }, [successMessage, router]);
@@ -135,14 +133,26 @@ export default function RegisterForm() {
       {/* Logo Responsivo */}
       <div className="flex justify-center mb-4">
         <Link href="/">
-          <Image
-            src="/images/logo.png"
-            alt="OiDiVi Helper Logo"
-            width={250}
-            height={150}
-            className="mx-auto max-w-[200px] md:max-w-[250px] h-auto cursor-pointer"
-            priority
-          />
+          <div className="relative">
+            {/* Logo para el modo claro */}
+            <Image
+              src="/images/logo-light.png"
+              alt="Logo Light"
+              width={250}
+              height={150}
+              className="mx-auto max-w-[200px] md:max-w-[250px] h-auto cursor-pointer block dark:hidden"
+              priority
+            />
+            {/* Logo para el modo oscuro */}
+            <Image
+              src="/images/logo-dark.png"
+              alt="Logo Dark"
+              width={250}
+              height={150}
+              className="mx-auto max-w-[200px] md:max-w-[250px] h-auto cursor-pointer hidden dark:block"
+              priority
+            />
+          </div>
         </Link>
       </div>
 
@@ -323,11 +333,11 @@ export default function RegisterForm() {
           className="
             w-full py-3 rounded-md font-bold text-white transition-all
             bg-gradient-to-r from-red-600 to-black hover:from-red-700 hover:to-gray-800
-            focus:outline-none focus:ring-2 focus:ring-red-600
+            focus:outline-none focus:ring-2 focus:ring-red-600 cursor-pointer
           "
           disabled={loading}
         >
-          {loading ? 'Signing up...' : 'Sign up'}
+          {loading ? "Signing up..." : "Sign up"}
         </button>
       </form>
     </div>

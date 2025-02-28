@@ -1,10 +1,10 @@
-'use client';
+"use client";
 
-import React, { useState } from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPen } from '@fortawesome/free-solid-svg-icons';
-import { uploadProfilePhoto } from '@/lib/api';
-import Image from 'next/image';
+import React, { useState } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPen } from "@fortawesome/free-solid-svg-icons";
+import { uploadProfilePhoto } from "@/lib/api";
+import Image from "next/image";
 
 interface ProfilePhotoUploaderProps {
   currentPhotoUrl: string;
@@ -18,7 +18,7 @@ const ProfilePhotoUploader: React.FC<ProfilePhotoUploaderProps> = ({
   const [photoPreview, setPhotoPreview] = useState(currentPhotoUrl);
   const [newPhoto, setNewPhoto] = useState<File | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [message, setMessage] = useState('');
+  const [message, setMessage] = useState("");
 
   const handlePhotoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
@@ -32,14 +32,14 @@ const ProfilePhotoUploader: React.FC<ProfilePhotoUploaderProps> = ({
 
   const handleSavePhoto = async () => {
     if (!newPhoto) return;
-    setMessage('');
+    setMessage("");
     try {
       await uploadProfilePhoto(newPhoto);
-      setMessage('Photo updated successfully!');
+      setMessage("Photo updated successfully!");
       onPhotoUpdated(photoPreview);
       setNewPhoto(null);
     } catch {
-      setMessage('Failed to update photo. Please try again.');
+      setMessage("Failed to update photo. Please try again.");
     }
   };
 
@@ -64,7 +64,10 @@ const ProfilePhotoUploader: React.FC<ProfilePhotoUploaderProps> = ({
         htmlFor="photoInput"
         className="absolute bottom-0 right-0 bg-white p-1 m-1 rounded-md cursor-pointer dark:bg-transparent hover:bg-white border-2 hover:border-4 dark:hover:bg-red-600 border-red-600 dark:border-white"
       >
-        <FontAwesomeIcon icon={faPen} className="text-red-600 dark:text-white" />
+        <FontAwesomeIcon
+          icon={faPen}
+          className="text-red-600 dark:text-white"
+        />
       </label>
       <input
         type="file"
@@ -110,4 +113,3 @@ const ProfilePhotoUploader: React.FC<ProfilePhotoUploaderProps> = ({
 };
 
 export default ProfilePhotoUploader;
-

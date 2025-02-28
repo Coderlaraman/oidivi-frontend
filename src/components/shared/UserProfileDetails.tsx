@@ -1,9 +1,9 @@
-'use client';
+"use client";
 
-import React from 'react';
-import { User } from '@/types';
-import ProfilePhotoUploader from './ProfilePhotoUploader';
-import ProfileVideoUploader from './ProfileVideoUploader';
+import React from "react";
+import { User } from "@/types";
+import ProfilePhotoUploader from "./ProfilePhotoUploader";
+import ProfileVideoUploader from "./ProfileVideoUploader";
 
 interface UserProfileDetailsProps {
   user: User | null;
@@ -15,11 +15,11 @@ const UserProfileDetails: React.FC<UserProfileDetailsProps> = ({
   onEditProfile,
 }) => {
   const handlePhotoUpdated = (newPhotoUrl: string) => {
-    console.log('Photo updated:', newPhotoUrl);
+    console.log("Photo updated:", newPhotoUrl);
   };
 
   const handleVideoUpdated = (newVideoUrl: string) => {
-    console.log('Video updated:', newVideoUrl);
+    console.log("Video updated:", newVideoUrl);
   };
 
   return (
@@ -28,21 +28,21 @@ const UserProfileDetails: React.FC<UserProfileDetailsProps> = ({
       <div className="flex flex-col md:flex-row items-center md:items-start bg-gray-100 dark:bg-gray-800 p-6 rounded-lg shadow space-y-6 md:space-y-0 md:space-x-6">
         {/* Imagen de perfil */}
         <ProfilePhotoUploader
-          currentPhotoUrl={user?.profile_photo_url || '/default-avatar.png'}
+          currentPhotoUrl={user?.profile_photo_url || "/default-avatar.png"}
           onPhotoUpdated={handlePhotoUpdated}
         />
 
         {/* Información principal */}
         <div className="flex-1 text-center md:text-left">
-          <h1 className="text-2xl font-bold">{user?.name || 'User Name'}</h1>
+          <h1 className="text-2xl font-bold">{user?.name || "User Name"}</h1>
           <p className="text-md text-blue-600 hover:text-indigo-700 dark:text-blue-400 dark:hover:text-indigo-400 underline cursor-pointer">
-            {user?.email || 'email@example.com'}
+            {user?.email || "email@example.com"}
           </p>
           <p className="text-sm text-gray-700 dark:text-gray-400 mt-2">
-            {user?.address || 'Address'}
+            {user?.address || "Address"}
           </p>
           <p className="text-sm text-gray-700 dark:text-gray-400">
-            {user?.phone || 'Phone'}
+            {user?.phone || "Phone"}
           </p>
           <button
             onClick={onEditProfile}
@@ -64,20 +64,20 @@ const UserProfileDetails: React.FC<UserProfileDetailsProps> = ({
         <h3 className="text-lg font-semibold mb-4">Profile Information</h3>
         <div className="space-y-2">
           <p>
-            <strong className="text-gray-900 dark:text-gray-200">Phone:</strong>{' '}
-            {user?.phone || 'N/A'}
+            <strong className="text-gray-900 dark:text-gray-200">Phone:</strong>{" "}
+            {user?.phone || "N/A"}
           </p>
           <p>
             <strong className="text-gray-900 dark:text-gray-200">
               Address:
-            </strong>{' '}
-            {user?.address || 'N/A'}
+            </strong>{" "}
+            {user?.address || "N/A"}
           </p>
           <p>
             <strong className="text-gray-900 dark:text-gray-200">
               ZIP Code:
-            </strong>{' '}
-            {user?.zip_code || 'N/A'}
+            </strong>{" "}
+            {user?.zip_code || "N/A"}
           </p>
         </div>
       </div>

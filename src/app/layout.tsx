@@ -1,23 +1,19 @@
-// app/layout.tsx
-import '../styles/globals.css'
-import { ReactNode } from 'react'
+import type { Metadata } from "next";
+import "./globals.css";
 
-export const metadata = {
-  title: 'OiDiVi Helper',
-  description: 'OiDiVi Helper Home Page',
-}
+export const metadata: Metadata = {
+  title: "OiDiVi Helper",
+  description: "OiDiVi Helper Home Page",
+};
 
 export default function RootLayout({
   children,
-}: {
-  children: ReactNode
-}) {
+}: Readonly<{
+  children: React.ReactNode;
+}>) {
   return (
-    <html lang="es">
-      <body>
-        {children}
-      </body>
+    <html lang="en">
+      <body>{children}</body>
     </html>
-  )
+  );
 }
-

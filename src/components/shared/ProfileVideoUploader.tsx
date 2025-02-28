@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPen } from '@fortawesome/free-solid-svg-icons';
-import { uploadProfileVideo } from '@/lib/api';
+import React, { useState } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPen } from "@fortawesome/free-solid-svg-icons";
+import { uploadProfileVideo } from "@/lib/api";
 
 interface ProfileVideoUploaderProps {
   currentVideoUrl: string | null;
@@ -14,7 +14,7 @@ const ProfileVideoUploader: React.FC<ProfileVideoUploaderProps> = ({
 }) => {
   const [videoPreview, setVideoPreview] = useState(currentVideoUrl);
   const [newVideo, setNewVideo] = useState<File | null>(null);
-  const [message, setMessage] = useState('');
+  const [message, setMessage] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
   const handleVideoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -29,14 +29,14 @@ const ProfileVideoUploader: React.FC<ProfileVideoUploaderProps> = ({
   const handleSaveVideo = async () => {
     if (!newVideo) return;
     setIsLoading(true);
-    setMessage('');
+    setMessage("");
     try {
       await uploadProfileVideo(newVideo);
-      setMessage('Video updated successfully!');
+      setMessage("Video updated successfully!");
       onVideoUpdated(videoPreview!);
       setNewVideo(null);
     } catch {
-      setMessage('Failed to update video. Please try again.');
+      setMessage("Failed to update video. Please try again.");
     } finally {
       setIsLoading(false);
     }
@@ -73,10 +73,11 @@ const ProfileVideoUploader: React.FC<ProfileVideoUploaderProps> = ({
         <button
           onClick={handleSaveVideo}
           disabled={isLoading}
-          className={`mt-2 px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 ${isLoading ? 'opacity-50 cursor-not-allowed' : ''
-            }`}
+          className={`mt-2 px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 ${
+            isLoading ? "opacity-50 cursor-not-allowed" : ""
+          }`}
         >
-          {isLoading ? 'Uploading...' : 'Save Video'}
+          {isLoading ? "Uploading..." : "Save Video"}
         </button>
       )}
       {message && <p className="text-red-500">{message}</p>}

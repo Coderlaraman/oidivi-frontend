@@ -1,24 +1,12 @@
-'use client';
+"use client";
 
-import { useState, useEffect } from 'react';
-import Navbar from '../components/layout/Navbar';
-import DynamicBackground from '../components/home/DynamicBackground';
-import Image from 'next/image';
-import { motion } from 'framer-motion';
-import Link from 'next/link';
+import Navbar from "../components/layout/Navbar";
+import DynamicBackground from "../components/home/DynamicBackground";
+import Image from "next/image";
+import { motion } from "framer-motion";
+import Link from "next/link";
 
 export default function Home() {
-  const [scrollY, setScrollY] = useState(0);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      setScrollY(window.scrollY);
-    };
-
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
   return (
     <main className="relative min-h-screen w-full overflow-hidden">
       <Navbar />
@@ -33,12 +21,23 @@ export default function Home() {
             transition={{ duration: 0.8 }}
             className="max-w-3xl"
           >
+            {/* Logo para Modo Claro */}
             <Image
-              src="/images/logo.png"
-              alt="OiDiVi Helper Logo"
+              src="/images/logo-light.png"
+              alt="OiDiVi Helper Logo Light"
               width={450}
               height={300}
-              className="mx-auto mb-6 max-w-full h-auto"
+              className="mx-auto mb-6 max-w-full h-auto block dark:hidden"
+              priority
+            />
+
+            {/* Logo para Modo Oscuro */}
+            <Image
+              src="/images/logo-dark.png"
+              alt="OiDiVi Helper Logo Dark"
+              width={450}
+              height={300}
+              className="mx-auto mb-6 max-w-full h-auto hidden dark:block"
               priority
             />
 
@@ -53,13 +52,13 @@ export default function Home() {
 
             <div className="flex flex-col sm:flex-row justify-center gap-4">
               <Link href="/login">
-                <button className="px-8 py-3 bg-red-600 hover:bg-red-700 text-white font-semibold rounded-lg transition-colors duration-300 shadow-lg">
+                <button className="px-8 py-3 bg-red-600 hover:bg-red-700 text-white font-semibold rounded-lg transition-colors duration-300 shadow-lg cursor-pointer">
                   Get Started Now
                 </button>
               </Link>
 
               <Link href="/register">
-                <button className="px-8 py-3 bg-white dark:bg-gray-800 border-2 border-gray-300 dark:border-gray-700 text-gray-800 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 font-semibold rounded-lg transition-colors duration-300 shadow-lg">
+                <button className="px-8 py-3 bg-white dark:bg-gray-800 border-2 border-gray-300 dark:border-gray-700 text-gray-800 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 font-semibold rounded-lg transition-colors duration-300 shadow-lg cursor-pointer">
                   Get an Account
                 </button>
               </Link>
@@ -76,22 +75,22 @@ export default function Home() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {[
               {
-                title: 'Security Guaranteed',
+                title: "Security Guaranteed",
                 description:
-                  'Identity verification, secure payments, and data protection for a safe experience.',
-                icon: '🔒',
+                  "Identity verification, secure payments, and data protection for a safe experience.",
+                icon: "🔒",
               },
               {
-                title: 'Tailored Services',
+                title: "Tailored Services",
                 description:
-                  'Easily find and hire helpers based on location, expertise, and budget.',
-                icon: '⚙️',
+                  "Easily find and hire helpers based on location, expertise, and budget.",
+                icon: "⚙️",
               },
               {
-                title: '24/7 Support',
+                title: "24/7 Support",
                 description:
-                  'Real-time support and instant messaging for seamless communication.',
-                icon: '🛡️',
+                  "Real-time support and instant messaging for seamless communication.",
+                icon: "🛡️",
               },
             ].map((feature, index) => (
               <motion.div

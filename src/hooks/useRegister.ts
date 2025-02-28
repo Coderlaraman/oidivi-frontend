@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import api from '../lib/api'; // Instancia de Axios configurada para tu backend
+import { useState } from "react";
+import api from "../lib/api"; // Instancia de Axios configurada para tu backend
 
 interface RegisterData {
   name: string;
@@ -15,6 +15,15 @@ interface RegisterData {
   profile_video?: File | null; // Agregado opcional para archivo
 }
 
+interface ApiErrorResponse {
+  response?: {
+    data?: {
+      errors?: Record<string, string[]>;
+      message?: string;
+    };
+  };
+}
+
 const useRegister = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<Record<string, string[]> | null>(null);
@@ -28,18 +37,19 @@ const useRegister = () => {
     try {
       const headers =
         data instanceof FormData
-          ? { 'Content-Type': 'multipart/form-data' }
-          : { 'Content-Type': 'application/json' };
+          ? { "Content-Type": "multipart/form-data" }
+          : { "Content-Type": "application/json" };
 
-      const response = await api.post('/register', data, { headers });
+      const response = await api.post("/register", data, { headers });
 
-      if (response.data?.message) {
-        setSuccessMessage(response.data.message); // Asegurarse de que el mensaje existe
+      setSuccessMessage(response.data?.message || "Registration successful!");
+    } catch (err: unknown) {
+      if (typeof err === "object" && err !== null && "response" in err) {
+        const axiosError = err as ApiErrorResponse;
+        setError(axiosError.response?.data?.errors || null);
       } else {
-        setSuccessMessage('Registration successful!'); // Mensaje por defecto si no viene en la respuesta
+        setError({ general: ["An unexpected error occurred."] });
       }
-    } catch (err: any) {
-      setError(err.response?.data?.errors || null);
     } finally {
       setLoading(false);
     }

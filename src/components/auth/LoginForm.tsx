@@ -1,41 +1,41 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
-import { useRouter } from 'next/navigation';
-import useLogin from '@/hooks/useLogin';
-import Image from 'next/image';
-import Link from 'next/link';
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+import useLogin from "@/hooks/useLogin";
+import Image from "next/image";
+import Link from "next/link";
 
 export default function LoginForm() {
   const router = useRouter();
   const { login, loading, error } = useLogin();
   const [formData, setFormData] = useState({
-    email: '',
-    password: '',
+    email: "",
+    password: "",
     remember_me: false,
   });
 
   const [errors, setErrors] = useState({
-    email: '',
-    password: '',
+    email: "",
+    password: "",
   });
 
   const validateField = (name: string, value: string) => {
-    if (name === 'email') {
+    if (name === "email") {
       const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      return emailRegex.test(value) ? '' : 'Invalid email format';
+      return emailRegex.test(value) ? "" : "Invalid email format";
     }
-    if (name === 'password') {
-      return value.length >= 6 ? '' : 'Password must be at least 6 characters';
+    if (name === "password") {
+      return value.length >= 6 ? "" : "Password must be at least 6 characters";
     }
-    return '';
+    return "";
   };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value, type, checked } = e.target;
     setFormData({
       ...formData,
-      [name]: type === 'checkbox' ? checked : value,
+      [name]: type === "checkbox" ? checked : value,
     });
 
     // Validar el campo en tiempo real
@@ -50,8 +50,8 @@ export default function LoginForm() {
 
     // Validaciones antes de enviar el formulario
     const newErrors = {
-      email: validateField('email', formData.email),
-      password: validateField('password', formData.password),
+      email: validateField("email", formData.email),
+      password: validateField("password", formData.password),
     };
 
     setErrors(newErrors);
@@ -59,7 +59,7 @@ export default function LoginForm() {
     if (!newErrors.email && !newErrors.password) {
       await login(formData);
       if (!error) {
-        router.push('/dashboard');
+        router.push("/dashboard");
       }
     }
   };
@@ -83,14 +83,26 @@ export default function LoginForm() {
       {/* Logo Responsivo */}
       <div className="flex justify-center mb-4">
         <Link href="/">
-          <Image
-            src="/images/logo.png"
-            alt="OiDiVi Helper Logo"
-            width={250}
-            height={150}
-            className="mx-auto max-w-[200px] md:max-w-[250px] h-auto cursor-pointer"
-            priority
-          />
+          <div className="relative">
+            {/* Logo para el modo claro */}
+            <Image
+              src="/images/logo-light.png"
+              alt="Logo Light"
+              width={250}
+              height={150}
+              className="mx-auto max-w-[200px] md:max-w-[250px] h-auto cursor-pointer block dark:hidden"
+              priority
+            />
+            {/* Logo para el modo oscuro */}
+            <Image
+              src="/images/logo-dark.png"
+              alt="Logo Dark"
+              width={250}
+              height={150}
+              className="mx-auto max-w-[200px] md:max-w-[250px] h-auto cursor-pointer hidden dark:block"
+              priority
+            />
+          </div>
         </Link>
       </div>
 
@@ -111,8 +123,8 @@ export default function LoginForm() {
               w-full rounded-md border px-3 py-2 transition-all
               ${
                 errors.email
-                  ? 'border-red-500 focus:ring-red-500'
-                  : 'border-gray-300 dark:border-gray-700 focus:ring-red-600'
+                  ? "border-red-500 focus:ring-red-500"
+                  : "border-gray-300 dark:border-gray-700 focus:ring-red-600"
               }
               bg-gray-50 dark:bg-gray-800 text-gray-800 dark:text-gray-100
               placeholder-gray-400 dark:placeholder-gray-500
@@ -142,8 +154,8 @@ export default function LoginForm() {
               w-full rounded-md border px-3 py-2 transition-all
               ${
                 errors.password
-                  ? 'border-red-500 focus:ring-red-500'
-                  : 'border-gray-300 dark:border-gray-700 focus:ring-red-600'
+                  ? "border-red-500 focus:ring-red-500"
+                  : "border-gray-300 dark:border-gray-700 focus:ring-red-600"
               }
               bg-gray-50 dark:bg-gray-800 text-gray-800 dark:text-gray-100
               placeholder-gray-400 dark:placeholder-gray-500
@@ -185,7 +197,7 @@ export default function LoginForm() {
           className="
             w-full py-3 rounded-md font-bold text-white transition-all
             bg-gradient-to-r from-red-600 to-black hover:from-red-700 hover:to-gray-800
-            focus:outline-none focus:ring-2 focus:ring-red-600
+            focus:outline-none focus:ring-2 focus:ring-red-600 cursor-pointer
           "
           disabled={loading}
         >
@@ -214,14 +226,14 @@ export default function LoginForm() {
               Logging in...
             </div>
           ) : (
-            'Log in'
+            "Log in"
           )}
         </button>
 
         {/* Error Message */}
         {error && (
           <p className="text-red-500 text-center mt-3">
-            {error.email || error.password || 'Login failed.'}
+            {error.email || error.password || "Login failed."}
           </p>
         )}
       </form>

@@ -1,8 +1,8 @@
-'use client';
+"use client";
 
-import DynamicBackground from '@/components/home/DynamicBackground';
-import LoginForm from '@/components/auth/LoginForm';
-import LoginSidebar from '@/components/auth/LoginSidebar';
+import DynamicBackground from "@/components/home/DynamicBackground";
+import LoginForm from "@/components/auth/LoginForm";
+import LoginSidebar from "@/components/auth/LoginSidebar";
 
 export default function LoginPage() {
   return (

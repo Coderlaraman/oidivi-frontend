@@ -1,13 +1,13 @@
-import { useState } from 'react';
+import { useState } from "react";
 
 const useTheme = () => {
-    const [theme, setTheme] = useState('light');
+  const [theme, setTheme] = useState("light");
 
-    const toggleTheme = () => {
-        setTheme((prevTheme) => (prevTheme === 'light' ? 'dark' : 'light'));
-    };
+  const toggleTheme = () => {
+    setTheme((prevTheme) => (prevTheme === "light" ? "dark" : "light"));
+  };
 
-    return { theme, toggleTheme };
+  return { theme, toggleTheme };
 };
 
 export default useTheme;

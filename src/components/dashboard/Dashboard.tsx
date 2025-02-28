@@ -1,16 +1,16 @@
-'use client';
+"use client";
 
-import React, { useState } from 'react';
-import useDashboard from '@/hooks/useDashboard';
-import EditProfileModal from '../shared/EditProfile';
-import UserProfileDetails from '../shared/UserProfileDetails';
-import UserActivities from '../shared/UserActivities';
-import QuickLinks from '../shared/QuickLinks';
-import DashboardFooter from '../shared/DashboardFooter';
-import DashboardHeader from '../shared/DashboardHeader';
-import SearchInput from '../shared/SearchInput';
-import SidebarDesktop from '../shared/SidebarDesktop';
-import SidebarMobile from '../shared/SidebarMobile';
+import React, { useState } from "react";
+import useDashboard from "@/hooks/useDashboard";
+import EditProfileModal from "../shared/EditProfile";
+import UserProfileDetails from "../shared/UserProfileDetails";
+import UserActivities from "../shared/UserActivities";
+import QuickLinks from "../shared/QuickLinks";
+import DashboardFooter from "../shared/DashboardFooter";
+import DashboardHeader from "../shared/DashboardHeader";
+import SearchInput from "../shared/SearchInput";
+import SidebarDesktop from "../shared/SidebarDesktop";
+import SidebarMobile from "../shared/SidebarMobile";
 
 const Dashboard: React.FC = () => {
   const { user, loading, error } = useDashboard();
@@ -73,12 +73,12 @@ const Dashboard: React.FC = () => {
           <QuickLinks
             links={[
               {
-                label: 'Find Helpers',
-                onClick: () => console.log('Find Helpers'),
+                label: "Find Helpers",
+                onClick: () => console.log("Find Helpers"),
               },
               {
-                label: 'Offer Services',
-                onClick: () => console.log('Offer Services'),
+                label: "Offer Services",
+                onClick: () => console.log("Offer Services"),
               },
             ]}
           />

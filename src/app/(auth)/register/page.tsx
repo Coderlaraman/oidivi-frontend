@@ -1,8 +1,8 @@
-'use client';
+"use client";
 
-import DynamicBackground from '@/components/home/DynamicBackground';
-import Image from 'next/image';
-import RegisterForm from '@/components/auth/RegisterForm';
+import DynamicBackground from "@/components/home/DynamicBackground";
+import Image from "next/image";
+import RegisterForm from "@/components/auth/RegisterForm";
 
 export default function RegisterPage() {
   return (
@@ -29,7 +29,8 @@ export default function RegisterPage() {
                 className="rounded-lg shadow-lg shadow-gray-500 dark:shadow-gray-700"
               />
               <p className="text-lg italic font-semibold">
-                "Boost your productivity with the right professionals."
+                &quot;Boost your productivity with the right
+                professionals.&quot;
               </p>
             </div>
 

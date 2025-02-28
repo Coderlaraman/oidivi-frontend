@@ -1,6 +1,6 @@
 // components/Navbar.tsx
-import React from 'react';
-import Link from 'next/link';
+import React from "react";
+import Link from "next/link";
 
 const Navbar: React.FC = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = React.useState<boolean>(false);
@@ -17,16 +17,28 @@ const Navbar: React.FC = () => {
           {/* Parte Izquierda: Enlaces básicos */}
           <div className="flex items-center font-semibold">
             <div className="hidden md:flex ml-4 space-x-6">
-              <Link href="/" className="text-gray-800 dark:text-gray-200 hover:text-red-600 transition-colors">
+              <Link
+                href="/"
+                className="text-gray-800 dark:text-gray-200 hover:text-red-600 transition-colors"
+              >
                 Home
               </Link>
-              <Link href="/about" className="text-gray-800 dark:text-gray-200 hover:text-red-600 transition-colors">
+              <Link
+                href="/about"
+                className="text-gray-800 dark:text-gray-200 hover:text-red-600 transition-colors"
+              >
                 About
               </Link>
-              <Link href="/services" className="text-gray-800 dark:text-gray-200 hover:text-red-600 transition-colors">
+              <Link
+                href="/services"
+                className="text-gray-800 dark:text-gray-200 hover:text-red-600 transition-colors"
+              >
                 Services
               </Link>
-              <Link href="/contact" className="text-gray-800 dark:text-gray-200 hover:text-red-600 transition-colors">
+              <Link
+                href="/contact"
+                className="text-gray-800 dark:text-gray-200 hover:text-red-600 transition-colors"
+              >
                 Contact
               </Link>
             </div>
@@ -52,13 +64,35 @@ const Navbar: React.FC = () => {
               >
                 {mobileMenuOpen ? (
                   // Ícono de cerrar (X)
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="h-6 w-6"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="M6 18L18 6M6 6l12 12"
+                    />
                   </svg>
                 ) : (
                   // Ícono hamburguesa
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16" />
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="h-6 w-6"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="M4 6h16M4 12h16M4 18h16"
+                    />
                   </svg>
                 )}
               </button>
@@ -109,7 +143,6 @@ const Navbar: React.FC = () => {
             </Link>
           </div>
         </div>
-
       )}
     </nav>
   );

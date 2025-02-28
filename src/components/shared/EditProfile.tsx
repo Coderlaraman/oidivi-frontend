@@ -1,10 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-'use client';
+"use client";
 
-import React, { useState } from 'react';
-import AddressInput from '@/components/shared/AddressInput';
-import { updateProfileData } from '@/lib/api';
-import { User } from '@/types';
+import React, { useState } from "react";
+import AddressInput from "@/components/shared/AddressInput";
+import { updateProfileData } from "@/lib/api";
+import { User } from "@/types";
 
 interface EditProfileProps {
   user: User | null;
@@ -13,19 +13,19 @@ interface EditProfileProps {
 
 const EditProfile: React.FC<EditProfileProps> = ({ user, onClose }) => {
   const [formData, setFormData] = useState({
-    name: user?.name || '',
-    email: user?.email || '',
-    phone: user?.phone || '',
-    address: user?.address || '',
-    zip_code: user?.zip_code || '',
+    name: user?.name || "",
+    email: user?.email || "",
+    phone: user?.phone || "",
+    address: user?.address || "",
+    zip_code: user?.zip_code || "",
     latitude: user?.latitude || 0,
     longitude: user?.longitude || 0,
   });
 
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const [successMessage, setSuccessMessage] = useState('');
-  const [errorMessage, setErrorMessage] = useState('');
+  const [successMessage, setSuccessMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -50,16 +50,16 @@ const EditProfile: React.FC<EditProfileProps> = ({ user, onClose }) => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
-    setSuccessMessage('');
-    setErrorMessage('');
+    setSuccessMessage("");
+    setErrorMessage("");
 
     try {
       await updateProfileData(formData);
-      setSuccessMessage('Profile updated successfully!');
+      setSuccessMessage("Profile updated successfully!");
       onClose();
     } catch (err: any) {
       setErrorMessage(
-        err.response?.data?.message || 'Failed to update profile.'
+        err.response?.data?.message || "Failed to update profile."
       );
     }
   };
@@ -149,10 +149,12 @@ const EditProfile: React.FC<EditProfileProps> = ({ user, onClose }) => {
             <button
               type="submit"
               disabled={isSubmitting} // Deshabilitar el botón si isSubmitting es true
-              className={`px-4 py-2 bg-gradient-to-r from-red-600 to-red-800 text-white rounded-lg hover:from-red-700 hover:to-red-900 ${isSubmitting ? 'opacity-50 cursor-not-allowed' : ''
-                }`}
+              className={`px-4 py-2 bg-gradient-to-r from-red-600 to-red-800 text-white rounded-lg hover:from-red-700 hover:to-red-900 ${
+                isSubmitting ? "opacity-50 cursor-not-allowed" : ""
+              }`}
             >
-              {isSubmitting ? 'Updating...' : 'Update'} {/* Cambiar el texto del botón */}
+              {isSubmitting ? "Updating..." : "Update"}{" "}
+              {/* Cambiar el texto del botón */}
             </button>
           </div>
 

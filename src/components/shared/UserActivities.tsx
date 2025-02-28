@@ -1,6 +1,6 @@
-'use client';
+"use client";
 
-import React from 'react';
+import React from "react";
 
 interface UserActivitiesProps {
   activities: {
@@ -17,11 +17,11 @@ const UserActivities: React.FC<UserActivitiesProps> = ({ activities }) => {
       </h2>
       <ul className="space-y-2 p-4 bg-gray-200 dark:bg-gray-900 rounded-lg shadow-md">
         <li className="text-gray-900 dark:text-gray-200">
-          Active requests:{' '}
+          Active requests:{" "}
           <span className="font-semibold">{activities.activeRequests}</span>
         </li>
         <li className="text-gray-900 dark:text-gray-200">
-          Offered services:{' '}
+          Offered services:{" "}
           <span className="font-semibold">{activities.offeredServices}</span>
         </li>
       </ul>

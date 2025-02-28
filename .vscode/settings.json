@@ -1,6 +1,10 @@
 {
-    "CodeGPT.apiKey": "CodeGPT Plus",
-    "files.associations": {
-        "*.css": "tailwindcss"
+    "editor.formatOnSave": true,
+    "editor.codeActionsOnSave": {
+        "source.fixAll.eslint": "always"
+    },
+
+    "[typescriptreact]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
     }
 }

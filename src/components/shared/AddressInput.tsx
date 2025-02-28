@@ -1,5 +1,5 @@
-import React, { useState, useRef, useCallback } from 'react';
-import axios from 'axios';
+import React, { useState, useRef, useCallback, useMemo } from "react";
+import axios from "axios";
 
 interface AddressInputProps {
   onAddressSelected: (data: {
@@ -11,10 +11,17 @@ interface AddressInputProps {
   inputClassName?: string;
 }
 
+interface Suggestion {
+  place_id: string;
+  display_name: string;
+  lat: string;
+  lon: string;
+}
+
 // Función debounce para evitar llamadas excesivas mientras el usuario escribe
-function debounce(func: (...args: any[]) => void, delay: number) {
+function debounce(func: (value: string) => void, delay: number) {
   let timeoutId: NodeJS.Timeout;
-  return (...args: any[]) => {
+  return (...args: [string]) => {
     if (timeoutId) clearTimeout(timeoutId);
     timeoutId = setTimeout(() => {
       func(...args);
@@ -24,35 +31,36 @@ function debounce(func: (...args: any[]) => void, delay: number) {
 
 const AddressInput: React.FC<AddressInputProps> = ({
   onAddressSelected,
-  inputClassName = '',
+  inputClassName = "",
 }) => {
-  const [query, setQuery] = useState('');
-  const [suggestions, setSuggestions] = useState<any[]>([]);
+  const [query, setQuery] = useState("");
+  const [suggestions, setSuggestions] = useState<Suggestion[]>([]);
   const inputRef = useRef<HTMLInputElement | null>(null);
 
-  // Función para llamar a la API de Autocomplete de LocationIQ
-  const fetchSuggestions = async (value: string) => {
+  // Memorizamos fetchSuggestions para mantener su identidad entre renders.
+  const fetchSuggestions = useCallback(async (value: string) => {
     try {
       const response = await axios.get(
-        'https://us1.locationiq.com/v1/autocomplete',
+        "https://us1.locationiq.com/v1/autocomplete",
         {
           params: {
             key: process.env.NEXT_PUBLIC_LOCATIONIQ_API_KEY, // Tu token en .env.local
             q: value,
             limit: 5,
-            format: 'json',
+            format: "json",
           },
         }
       );
       setSuggestions(response.data);
     } catch (error) {
-      console.error('Error al obtener sugerencias:', error);
+      console.error("Error al obtener sugerencias:", error);
     }
-  };
+  }, []);
 
-  const debouncedFetchSuggestions = useCallback(
-    debounce(fetchSuggestions, 300),
-    []
+  // Usamos useMemo para crear la función debounced solo cuando fetchSuggestions cambie.
+  const debouncedFetchSuggestions = useMemo(
+    () => debounce(fetchSuggestions, 300),
+    [fetchSuggestions]
   );
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -69,36 +77,32 @@ const AddressInput: React.FC<AddressInputProps> = ({
   const getPostalCode = async (lat: string, lon: string) => {
     try {
       const response = await axios.get(
-        'https://us1.locationiq.com/v1/reverse',
+        "https://us1.locationiq.com/v1/reverse",
         {
           params: {
             key: process.env.NEXT_PUBLIC_LOCATIONIQ_API_KEY,
             lat,
             lon,
-            format: 'json',
+            format: "json",
           },
         }
       );
-      return response.data.address.postcode || '';
+      return response.data.address.postcode || "";
     } catch (error) {
-      console.error('Error al obtener el código postal:', error);
-      return '';
+      console.error("Error al obtener el código postal:", error);
+      return "";
     }
   };
 
   // Maneja la selección de una sugerencia
-  const handleSuggestionClick = async (suggestion: any) => {
-    // Actualiza el input con la dirección seleccionada y limpia las sugerencias
+  const handleSuggestionClick = async (suggestion: Suggestion) => {
     setQuery(suggestion.display_name);
     setSuggestions([]);
 
     const latitude = parseFloat(suggestion.lat);
     const longitude = parseFloat(suggestion.lon);
-
-    // Llama a Reverse Geocoding para obtener el código postal
     const postal = await getPostalCode(suggestion.lat, suggestion.lon);
 
-    // Invoca la función callback con los datos requeridos
     onAddressSelected({
       address: suggestion.display_name,
       zip_code: postal,
@@ -106,7 +110,6 @@ const AddressInput: React.FC<AddressInputProps> = ({
       longitude,
     });
 
-    // Actualiza el valor del input (opcional, ya que ya lo hemos asignado)
     if (inputRef.current) {
       inputRef.current.value = suggestion.display_name;
     }
