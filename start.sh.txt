@@ -1,0 +1,5 @@
+#!/bin/bash
+# start.sh
+
+cd /home/ubuntu/oidivi-frontend
+npm start

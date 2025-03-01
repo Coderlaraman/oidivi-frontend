@@ -13,33 +13,25 @@ jobs:
       - name: SSH into Amazon Lightsail and deploy
         uses: appleboy/ssh-action@master
         with:
-          host: 3.137.31.20
-          username: ubuntu
-          key: ${{ secrets.LIGHTSAIL_SSH_KEY }}
+          host: ${{ secrets.LIGHTSAIL_HOST }}
+          username: ${{ secrets.LIGHTSAIL_USER }}
+          key: ${{ secrets.LIGHTSAIL_SSH_KEY || '' }}
           script: |
             cd /home/ubuntu/oidivi-frontend
 
             echo "🔄 Descartando cambios locales y obteniendo la última versión del código..."
             git reset --hard HEAD
             git pull origin main --force
+            git clean -fd
+
+            echo "🧹 Eliminando build anterior..."
+            rm -rf .next
 
             echo "📦 Instalando dependencias..."
             npm install
-            npx prettier --write .
+            npm run lint || echo "Linting completado con errores, continuar..."
 
             echo "⚙️ Compilando la aplicación..."
             npm run build
 
-            echo "🚀 Configurando PM2 correctamente..."
-            pm2 delete oidivi-frontend || true
-
-            # Crear script de inicio
-            echo -e '#!/bin/bash\ncd /home/ubuntu/oidivi-frontend\nnpm start' > start.sh
-            chmod +x start.sh
-
-            # Iniciar la aplicación con PM2 usando el script
-            pm2 start ./start.sh --name "oidivi-frontend"
-            pm2 save
-
-            echo "🔄 Configurando PM2 para que se inicie con el sistema..."
-            sudo env PATH=$PATH:/usr/bin /usr/lib/node_modules/pm2/bin/pm2 startup systemd -u ubuntu --hp /home/ubuntu
+            pm2 reload oidivi-frontend || pm2 restart oidivi-frontend
