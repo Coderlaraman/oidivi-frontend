@@ -12,7 +12,7 @@ import { AddressLocation } from "@/types";
 
 export default function RegisterForm() {
   const router = useRouter();
-  const { register, loading, successMessage } = useRegister();
+  const { register, loading, successMessage, error } = useRegister();
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -58,7 +58,7 @@ export default function RegisterForm() {
       return;
     }
 
-    if (!formData.phone) {
+    if (!formData.phone || !/^\+?[0-9]{10,15}$/.test(formData.phone)) {
       setFormError("Please provide a valid phone number.");
       return;
     }
@@ -118,6 +118,13 @@ export default function RegisterForm() {
     }
   }, [successMessage, router]);
 
+  useEffect(() => {
+    if (error) {
+      const errorMessage = Object.values(error).flat().join(" ");
+      setFormError(errorMessage);
+    }
+  }, [error]);
+
   return (
     <div
       className="
@@ -157,7 +164,10 @@ export default function RegisterForm() {
       </div>
 
       {formError && (
-        <p className="text-center text-red-500 mb-2">{formError}</p>
+        <>
+          <p className="text-center text-red-500 mb-2">{formError}</p>
+          {console.error("Error en el formulario de registro:", formError)}
+        </>
       )}
 
       <form noValidate onSubmit={handleSubmit} className="space-y-2">
