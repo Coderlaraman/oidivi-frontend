@@ -19,13 +19,18 @@ jobs:
           script: |
             cd /home/ubuntu/oidivi-frontend
 
+            # Asegurar que Git confía en el directorio
+            git config --global --add safe.directory /home/ubuntu/oidivi-frontend
+
             echo "🔄 Descartando cambios locales y obteniendo la última versión del código..."
             git reset --hard HEAD
             git pull origin main --force
             git clean -fd
+            git log -1 --oneline
 
             echo "🧹 Eliminando build anterior..."
             rm -rf .next
+            ls -la
 
             echo "📦 Instalando dependencias..."
             npm install
@@ -34,4 +39,8 @@ jobs:
             echo "⚙️ Compilando la aplicación..."
             npm run build
 
+            echo "Reiniciando PM2..."
             pm2 reload oidivi-frontend || pm2 restart oidivi-frontend
+
+            echo "Verificando proceso PM2..."
+            pm2 show oidivi-frontend
