@@ -13,9 +13,9 @@ jobs:
       - name: SSH into Amazon Lightsail and deploy
         uses: appleboy/ssh-action@master
         with:
-          host: ${{ secrets.LIGHTSAIL_HOST }}
-          username: ${{ secrets.LIGHTSAIL_USER }}
-          key: ${{ secrets.LIGHTSAIL_SSH_KEY || '' }}
+          host: ${{ secrets.OIDIVI_FRONTEND_LIGHTSAIL_HOST }}
+          username: ${{ secrets.OIDIVI_FRONTEND_LIGHTSAIL_USER }}
+          key: ${{ secrets.OIDIVI_FRONTEND_LIGHTSAIL_SSH_KEY || '' }}
           script: |
             cd /home/ubuntu/oidivi-frontend
 

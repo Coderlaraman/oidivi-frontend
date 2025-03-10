@@ -13,6 +13,8 @@ export type SupportedLanguages = "en" | "es" | "fr";
 // Tipo utilitario mejorado para generar claves de traducción con profundidad limitada
 type DotPrefix<T extends string> = T extends "" ? "" : `.${T}`;
 
+type Tail<T extends any[]> = T extends [any, ...infer R] ? R : T;
+
 type DotNestedKeys<
   T,
   Depth extends number[] = [1, 1, 1, 1] // Limita la profundidad a 4 niveles
@@ -21,12 +23,12 @@ type DotNestedKeys<
   : T extends object
   ? {
       [K in keyof T]: K extends string | number
-        ? `${K}` | `${K}${DotPrefix<DotNestedKeys<T[K], Tail<Depth>>>}`
+        ?
+            | `${K}`
+            | `${K}${DotPrefix<DotNestedKeys<T[K], Tail<Depth> & number[]>>}`
         : never;
     }[keyof T]
   : "";
-
-type Tail<T extends any[]> = T extends [any, ...infer R] ? R : never;
 
 // Definición centralizada de las traducciones
 export const translations = {
